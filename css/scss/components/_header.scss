@@ -1,0 +1,124 @@
+header {
+
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    @include lg {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .container {
+
+        display: grid;
+        flex-direction: row;
+        grid-template-columns: 2fr 1fr;
+        grid-template-areas:
+            "logo toggle"
+            "menu menu";
+
+        @include lg {
+            grid-template-columns: 1fr 2fr;
+            grid-template-areas: "logo menu";
+        }
+
+    }
+
+    .logo {
+        grid-area: logo;
+        align-self: center;
+    }
+
+    #menu {
+
+        grid-area: menu;
+        font-family: $font-poppins;
+
+        @include lg {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .menu-links {
+
+            color: $color-dark-2;
+            padding-top: 20px;
+            text-align: right;
+
+            @include lg {
+                padding-top: 0;
+                text-align: center;
+            }
+
+            .link {
+
+                color: $color-dark-2;
+                display: block;
+                margin-left: 20px;
+                font-size: 20px;
+                padding: 10px;
+
+                &:hover {
+                    color: $color-theme-1;
+                }
+
+                @include lg {
+                    display: inline-block;
+                    font-size: 16px;
+                    padding: 0;
+                }
+
+            }
+
+        }
+
+        .menu-icons {
+
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            background-color: $color-white;
+            box-shadow: 0px -2px 2px #88888830;
+
+            @include lg {
+                position: static;
+                padding-top: 0;
+                padding-bottom: 0;
+                box-shadow: none;
+            }
+
+            .link {
+
+                margin-left: 20px;
+                color: $color-dark-4;
+
+                &:hover {
+                    color: $color-theme-1;
+                }
+
+            }
+
+        }
+
+    }
+
+    .button-toggle {
+
+        grid-area: toggle;
+        display: flex;
+        justify-self: flex-end;
+        justify-content: center;
+        align-items: center;
+
+        @include lg {
+            display: none;
+        }
+
+    }
+
+}

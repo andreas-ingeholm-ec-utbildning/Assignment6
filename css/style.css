@@ -1,0 +1,223 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,900;1,600&family=Roboto:wght@300;400;500;700;900&display=swap");
+html,
+body {
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  color: #636363;
+  margin-bottom: 22px;
+}
+@media (min-width: 992px) {
+  html,
+  body {
+    margin-bottom: 0;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: #636363;
+}
+a:hover {
+  color: #FA3150;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  font-family: "Poppins", sans-serif;
+  padding: 8px 35px;
+  transition: all 0.1s;
+}
+button:hover {
+  background-color: #636363;
+  color: #ffffff;
+}
+
+.button-white {
+  padding: 5px 10px;
+  background-color: #ffffff;
+  color: #292929;
+}
+
+.button-theme {
+  background-color: #FA3150;
+  color: #ffffff;
+}
+.button-theme:hover {
+  background-color: #636363;
+  color: #ffffff;
+}
+
+header {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+@media (min-width: 992px) {
+  header {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}
+header .container {
+  display: grid;
+  flex-direction: row;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas: "logo toggle" "menu menu";
+}
+@media (min-width: 992px) {
+  header .container {
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: "logo menu";
+  }
+}
+header .logo {
+  grid-area: logo;
+  align-self: center;
+}
+header #menu {
+  grid-area: menu;
+  font-family: "Poppins", sans-serif;
+}
+@media (min-width: 992px) {
+  header #menu {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+header #menu .menu-links {
+  color: #292929;
+  padding-top: 20px;
+  text-align: right;
+}
+@media (min-width: 992px) {
+  header #menu .menu-links {
+    padding-top: 0;
+    text-align: center;
+  }
+}
+header #menu .menu-links .link {
+  color: #292929;
+  display: block;
+  margin-left: 20px;
+  font-size: 20px;
+  padding: 10px;
+}
+header #menu .menu-links .link:hover {
+  color: #FA3150;
+}
+@media (min-width: 992px) {
+  header #menu .menu-links .link {
+    display: inline-block;
+    font-size: 16px;
+    padding: 0;
+  }
+}
+header #menu .menu-icons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #ffffff;
+  box-shadow: 0px -2px 2px rgba(136, 136, 136, 0.1882352941);
+}
+@media (min-width: 992px) {
+  header #menu .menu-icons {
+    position: static;
+    padding-top: 0;
+    padding-bottom: 0;
+    box-shadow: none;
+  }
+}
+header #menu .menu-icons .link {
+  margin-left: 20px;
+  color: #AEAEAE;
+}
+header #menu .menu-icons .link:hover {
+  color: #FA3150;
+}
+header .button-toggle {
+  grid-area: toggle;
+  display: flex;
+  justify-self: flex-end;
+  justify-content: center;
+  align-items: center;
+}
+@media (min-width: 992px) {
+  header .button-toggle {
+    display: none;
+  }
+}
+
+.showcase {
+  background-color: #F3F2F2;
+  padding: 60px 0;
+}
+@media (min-width: 992px) {
+  .showcase {
+    padding: 0 0 60px 0;
+  }
+}
+.showcase .container {
+  display: block;
+  text-align: center;
+}
+@media (min-width: 992px) {
+  .showcase .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.showcase .content {
+  font-family: "Poppins", sans-serif;
+  color: #292929;
+}
+@media (min-width: 992px) {
+  .showcase .content {
+    flex: 2;
+    text-align: left;
+    padding-right: 20px;
+  }
+}
+@media (min-width: 1200px) {
+  .showcase .content {
+    flex: 1;
+    padding-right: 100px;
+    margin-bottom: 40px;
+  }
+}
+.showcase .content .ingress {
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+.showcase .content .title {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+@media (min-width: 992px) {
+  .showcase .content .title {
+    font-size: 60px;
+    margin-bottom: 50px;
+  }
+}
+.showcase .content-image {
+  display: none;
+}
+@media (min-width: 992px) {
+  .showcase .content-image {
+    display: block;
+    flex: 1;
+  }
+}
+.showcase img {
+  width: 100%;
+  height: auto;
+}/*# sourceMappingURL=style.css.map */
