@@ -49,6 +49,11 @@ button:hover {
   color: #ffffff;
 }
 
+.grid {
+  display: grid;
+  grid-auto-columns: auto;
+}
+
 header {
   padding-top: 30px;
   padding-bottom: 30px;
@@ -220,4 +225,30 @@ header .button-toggle {
 .showcase img {
   width: 100%;
   height: auto;
+}
+
+.button-product {
+  padding: 0;
+  width: 270px;
+}
+.button-product .header {
+  text-align: left;
+  font-size: 18px;
+  font-weight: 500;
+  color: #000000;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 0;
+}
+.button-product .price {
+  text-align: left;
+  font-size: 16px;
+  font-weight: 400;
+  color: #636363;
+  line-height: 18px;
+  margin: 0;
+}
+.button-product:hover {
+  background-color: transparent;
 }/*# sourceMappingURL=style.css.map */

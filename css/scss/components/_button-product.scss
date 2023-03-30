@@ -1,0 +1,39 @@
+.button-product {
+
+    padding: 0;
+    width: 270px;
+
+    .image {}
+
+    .header {
+        text-align: left;
+        font-size: 18px;
+        font-weight: $font-weight-medium;
+        color: $color-dark-1;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin: 0;
+    }
+
+    .price {
+
+        text-align: left;
+        font-size: 16px;
+        font-weight: $font-weight-regular;
+        color: #636363;
+        line-height: 18px;
+        margin: 0;
+    }
+
+    &:hover {
+
+        background-color: transparent;
+
+        .price {
+            // color: white;
+        }
+
+    }
+
+}
