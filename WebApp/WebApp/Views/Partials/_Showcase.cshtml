@@ -1,12 +1,21 @@
-﻿<section class="showcase">
+﻿@model ShowcaseViewModel
+
+@if (Model is not null && !string.IsNullOrEmpty(Model.ImageUrl))
+{  
+<section class="showcase">
     <div class="container">
         <div class="content">
-            <div class="ingress">WELCOME TO BMERKETO SHOP</div>
-            <div class="title">Exclusive Chair gold Collection.</div>
-            <button class="btn-theme">SHOP NOW</button>
+
+            <div class="ingress">@Model?.Ingress</div>
+            <div class="title">@Model?.Title</div>
+
+            @if (!string.IsNullOrEmpty(Model?.LinkUrl) && !string.IsNullOrEmpty(Model?.LinkContent))
+            {<a href="@Model?.LinkUrl" class="btn-theme">@Model?.LinkContent</a>}
+
         </div>
         <div class="content-image">
-            <img src="images/placeholders/625x647.svg" alt="">
+            <img src="@Model?.ImageUrl" alt="@Model?.Title">
         </div>
     </div>
 </section>
+}
