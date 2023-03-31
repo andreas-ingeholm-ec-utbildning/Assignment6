@@ -1,14 +1,11 @@
-﻿@model HomeIndexViewModel;
+﻿@inject ShowcaseService showcaseService;
+@inject CollectionService collectionService;
 
-@{
-    foreach (var showcase in Model.Showcases)
-    {
-        <partial name="/Views/Partials/_Showcase.cshtml" model="@showcase"/>
-    }
+<partial name="/Views/Partials/_Showcase.cshtml" model="showcaseService.GetLatest()"/>
+
+@foreach (var collection in collectionService.GetCollections())
+{
+    <partial name="/Views/Partials/_GridCollection.cshtml" model="collection"/>
 }
-
-<partial name="/Views/Partials/_BestCollection.cshtml"/>
-<partial name="/Views/Partials/_UpToSale.cshtml"/>
-<partial name="/Views/Partials/_TopSelling.cshtml"/>
 
 <partial name="/Views/Partials/Forms/_Newsletter.cshtml" />

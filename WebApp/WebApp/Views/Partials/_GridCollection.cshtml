@@ -1,0 +1,44 @@
+﻿@model CollectionModel;
+
+@if (Model is not null)
+{
+    <section class="grid-collection">
+        <div class="container">
+
+            @if (!string.IsNullOrEmpty(Model.Title))
+            {
+                <h1 class="title">@Model.Title</h1>
+            }
+
+            @if (Model.Categories?.Any() ?? false)
+            {
+                <ul class="categories">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <li class="category-item">
+                            <a asp-controller="products" asp-action="@category">@category</a>
+                        </li>
+                    }
+                </ul>
+            }
+
+            @if (Model.Items?.Any() ?? false)
+            {
+                <div class="grid">
+                    @foreach (var item in Model.Items)
+                    {
+                        <partial name="/Views/Partials/_GridCollectionItem.cshtml" model="item" />
+                    }
+                </div>
+            }
+
+            @if (Model.CanLoadMore)
+            {
+                <div class="load-more">
+                    <button class="btn-outline-white">LOAD MORE <i class="fa-solid fa-rotate-right"></i></button>
+                </div>
+            }
+
+        </div>
+    </section>
+}

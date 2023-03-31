@@ -23,7 +23,7 @@ function updateFooterPosition(scrollHeight, innerHeight) {
     try {
 
         const footer = document.querySelector("footer");
-        const isBodyLargerThanScreen = scrollHeight >= innerHeight;
+        const isBodyLargerThanScreen = scrollHeight >= innerHeight + footer.scrollHeight;
 
         footer.classList.toggle("position-fixed-bottom", !isBodyLargerThanScreen);
         footer.classList.toggle("position-static", isBodyLargerThanScreen);
