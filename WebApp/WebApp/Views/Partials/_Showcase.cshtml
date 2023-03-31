@@ -1,23 +1,26 @@
 ﻿@using WebApp.Models;
 
-@if (Model is not null && !string.IsNullOrEmpty(Model.ImageUrl))
-{
-    <section class="showcase">
-        <div class="container">
-            <div class="content">
+@if (Model is null)
+    return;
 
-                <div class="ingress">@Model?.Ingress</div>
-                <div class="title">@Model?.Title</div>
+@if (string.IsNullOrEmpty(Model.ImageUrl))
+    return;
 
-                @if (Model?.LinkButton is not null)
-                {
-                    <a href="@Model?.LinkButton.Url" class="btn-theme">@Model?.LinkButton.Content</a>
-                }
+<section class="showcase">
+    <div class="container">
+        <div class="content">
 
-            </div>
-            <div class="content-image">
-                <img src="@Model?.ImageUrl" alt="@Model?.Title">
-            </div>
+            <div class="ingress">@Model.Ingress</div>
+            <div class="title">@Model.Title</div>
+
+            @if (Model.LinkButton is not null)
+            {
+                <a href="@Model.LinkButton.Url" class="btn-theme">@Model.LinkButton.Content</a>
+            }
+
         </div>
-    </section>
-}
+        <div class="content-image">
+            <img src="@Model.ImageUrl" alt="@Model.Title">
+        </div>
+    </div>
+</section>
