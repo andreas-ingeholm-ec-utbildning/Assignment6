@@ -29,6 +29,27 @@ html, body {
   right: 0;
 }
 
+.w-pre {
+  white-space: pre;
+}
+
+.w-max-200px {
+  max-width: 200px !important;
+}
+
+ol, ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.validation-summary-errors {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .btn-toggle {
   font-family: "Poppins", sans-serif;
   font-size: 1.8em;
@@ -295,8 +316,13 @@ input:not([type=checkbox]):focus {
   align-items: center;
 }
 
+.header-spacer {
+  height: 80px;
+}
+
 header {
   position: fixed;
+  top: 0;
   width: 100%;
   height: 80px;
   z-index: 1;
@@ -650,141 +676,6 @@ footer .container {
   }
 }
 .grid-collection .load-more {
-  margin-top: 40px;
-  text-align: center;
-}
-
-.up-to-sell {
-  background-color: #FAEFEF;
-  padding: 40px 20px;
-}
-.up-to-sell .collection-grid {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-template-areas: "content" "item-1" "item-2";
-  gap: 40px;
-}
-@media (min-width: 768px) {
-  .up-to-sell .collection-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-areas: "content content" "item-1 item-2";
-  }
-}
-@media (min-width: 992px) {
-  .up-to-sell .collection-grid {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-areas: "item-1 content item-2";
-  }
-}
-.up-to-sell .collection-grid .item-1 {
-  grid-area: item-1;
-}
-.up-to-sell .collection-grid .discover {
-  grid-area: content;
-}
-.up-to-sell .collection-grid .item-2 {
-  grid-area: item-2;
-}
-.up-to-sell .collection-grid .collection-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-.up-to-sell .collection-grid .collection-content .container {
-  text-align: center;
-  padding: 30px 20px;
-}
-@media (min-width: 768px) {
-  .up-to-sell .collection-grid .collection-content .container {
-    padding: 30px 80px;
-  }
-}
-@media (min-width: 992px) {
-  .up-to-sell .collection-grid .collection-content .container {
-    padding: 10px 20px;
-  }
-}
-@media (min-width: 1200px) {
-  .up-to-sell .collection-grid .collection-content .container {
-    padding: 30px;
-  }
-}
-.up-to-sell .collection-grid .collection-content .title-red {
-  font-family: "Poppins", sans-serif;
-  color: #FA3150;
-  font-size: 18px;
-  font-weight: 700;
-}
-.up-to-sell .collection-grid .collection-content .title {
-  font-family: "Playfair Display", serif;
-  font-weight: 700;
-  font-size: 48px;
-  color: #292929;
-}
-.up-to-sell .collection-grid .collection-content .ingress {
-  font-family: "Poppins", sans-serif;
-  color: #292929;
-  font-size: 24px;
-  font-weight: 700;
-}
-.up-to-sell .collection-grid .collection-content .text {
-  margin-top: 20px;
-  font-family: "Roboto", sans-serif;
-  color: #636363;
-  font-size: 16px;
-  font-weight: 400;
-}
-.up-to-sell .collection-grid .collection-content .link {
-  display: block;
-  margin-top: 10px;
-  color: #292929;
-}
-.up-to-sell .collection-grid .collection-content .link:hover {
-  color: #FA3150;
-}
-@media (min-width: 1200px) {
-  .up-to-sell .collection-grid .collection-content .link {
-    margin-top: 50px;
-  }
-}
-
-.top-selling {
-  padding: 40px 20px;
-}
-.top-selling .collection-title {
-  text-align: center;
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  font-size: 30px;
-  color: #292929;
-}
-.top-selling .collection-grid {
-  margin-top: 40px;
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 40px;
-}
-@media (min-width: 768px) {
-  .top-selling .collection-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (min-width: 992px) {
-  .top-selling .collection-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media (min-width: 1200px) {
-  .top-selling .collection-grid {
-    grid-template-columns: repeat(7, 1fr);
-  }
-}
-.top-selling .collection-grid .collection-item .body .title {
-  font-size: 14px;
-  font-weight: 500;
-}
-.top-selling .load-more {
   margin-top: 40px;
   text-align: center;
 }

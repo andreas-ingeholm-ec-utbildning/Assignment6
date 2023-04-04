@@ -1,6 +1,6 @@
 ﻿namespace WebApp.Models;
 
-public struct LinkButtonModel
+public struct LinkButton
 {
     public string Content { get; set; }
     public string Url { get; set; }

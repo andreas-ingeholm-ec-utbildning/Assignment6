@@ -1,0 +1,21 @@
+﻿@inject ProductService productService
+@{
+    ViewData["Title"] = "Products";
+    var products = await productService.EnumerateAsync();
+}
+
+<h5>Products:</h5>
+<ul class="p-0 me-4">
+
+    @if (products is not null)
+        foreach (var product in products)
+        {
+            <li>
+                <a asp-controller="products" asp-action="edit" asp-route-id="@product.ID">@product.Name</a>
+            </li>
+        }
+
+    <li class="mt-2"><a asp-controller="products" asp-action="register">Create new product...</a></li>
+
+</ul>
+

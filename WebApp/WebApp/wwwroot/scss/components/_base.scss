@@ -24,3 +24,26 @@ html, body {
     left: 0;
     right: 0;
 }
+
+.w-pre {
+    white-space: pre;
+}
+
+.w-max-200px {
+    max-width: 200px !important;
+}
+
+ol, ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.validation-summary-errors {
+
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}

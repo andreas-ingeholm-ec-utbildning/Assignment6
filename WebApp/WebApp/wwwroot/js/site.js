@@ -33,4 +33,4 @@ function updateFooterPosition(scrollHeight, innerHeight) {
 }
 
 toggleMenu('[data-option="toggle"]');
-updateFooterPosition(document.body.scrollHeight, win.innerHeight);
+updateFooterPosition(document.body.scrollHeight, window.innerHeight);

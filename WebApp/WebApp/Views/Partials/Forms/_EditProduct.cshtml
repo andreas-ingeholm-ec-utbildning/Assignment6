@@ -1,0 +1,36 @@
+﻿@model ProductEditView;
+
+<div class="col-6">
+
+    <form method="post" novalidate>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="text-info my-2">ID: @Model.ID</div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <small><span asp-validation-for="Name" class="text-danger"></span></small>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Price" class="form-label"></label>
+            <input asp-for="Price" class="form-control" />
+            <small><span asp-validation-for="Price" class="text-danger"></span></small>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+            <small><span asp-validation-for="Description" class="text-danger"></span></small>
+        </div>
+        <div class="d-grid mt-2">
+            <button type="submit">Update product</button>
+        </div>
+
+    </form>
+
+    <a asp-controller="products" asp-action="delete" asp-route-id="@Model.ID">Delete product...</a>
+
+</div>

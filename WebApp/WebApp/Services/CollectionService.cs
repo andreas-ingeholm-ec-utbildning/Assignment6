@@ -11,13 +11,13 @@ public class CollectionService
     string GetID() =>
         (count += 1).ToString();
 
-    public IEnumerable<CollectionModel> GetCollections() =>
-        new CollectionModel[] {
+    public IEnumerable<Collection> GetCollections() =>
+        new Collection[] {
             new()
             {
                 Title = "Best Collection",
                 Categories = new[] { "All", "Bags", "Dresses", "Decorations", "Essentials", "Interior", "Laptops", "Mobile", "Beauty" },
-                Items = new CollectionItemModel[]
+                Items = new CollectionItem[]
                 {
                     new() { Id = GetID(), Title = "Apple watch collection " + count, Price = 30, ImageUrl = "images/placeholders/270x295.svg" },
                     new() { Id = GetID(), Title = "Apple watch collection " + count, Price = 30, ImageUrl = "images/placeholders/270x295.svg" },
@@ -33,7 +33,7 @@ public class CollectionService
             {
                 Title = "Up to Sale",
                 Categories = new[] { "All", "Bags", "Dresses", "Decorations", "Essentials", "Interior", "Laptops", "Mobile", "Beauty" },
-                Items = new CollectionItemModel[]
+                Items = new CollectionItem[]
                 {
                     new() { Id = GetID(), Title = "Apple watch collection " + count, Price = 30, ImageUrl = "images/placeholders/270x295.svg" },
                     new() { Id = GetID(), Title = "Apple watch collection " + count, Price = 30, ImageUrl = "images/placeholders/270x295.svg" },
@@ -49,7 +49,7 @@ public class CollectionService
             {
                 Title = "Best selling",
                 Categories = new[] { "All", "Bags", "Dresses", "Decorations", "Essentials", "Interior", "Laptops", "Mobile", "Beauty" },
-                Items = new CollectionItemModel[]
+                Items = new CollectionItem[]
                 {
                     new() { Id = GetID(), Title = "Apple watch collection " + count, Price = 30, ImageUrl = "images/placeholders/270x295.svg" },
                     new() { Id = GetID(), Title = "Apple watch collection " + count, Price = 30, ImageUrl = "images/placeholders/270x295.svg" },

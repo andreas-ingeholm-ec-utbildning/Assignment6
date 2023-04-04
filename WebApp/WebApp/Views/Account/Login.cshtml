@@ -1,0 +1,32 @@
+﻿@model LoginView
+@{ ViewData["Title"] = "Login"; }
+
+<div class="d-flex justify-content-center my-5">
+    <div class="col-6">
+
+        <form method="post" novalidate class="mb-2">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="EmailAddress" class="form-label"></label>
+                <input asp-for="EmailAddress" class="form-control" />
+                <small><span asp-validation-for="EmailAddress" class="text-danger" /></small>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <small><span asp-validation-for="Password" class="text-danger" /></small>
+            </div>
+
+            <div class="grid">
+                <button type="submit" class="button-success mt-2">Log in</button>
+            </div>
+
+        </form>
+
+        <a asp-asp-controller="account" asp-action="register">Create account...</a>
+
+    </div>
+</div>

@@ -1,9 +1,9 @@
 ﻿namespace WebApp.Models;
 
-public class ShowcaseModel
+public class Showcase
 {
     public string? Ingress { get; set; }
     public string? Title { get; set; }
     public string? ImageUrl { get; set; }
-    public LinkButtonModel? LinkButton { get; set; }
+    public LinkButton? LinkButton { get; set; }
 }

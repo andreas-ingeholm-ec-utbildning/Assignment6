@@ -1,6 +1,6 @@
-﻿namespace WebApp.ViewModels;
+﻿namespace WebApp.Models;
 
-public class GridCollectionItemViewModel
+public class CollectionItem
 {
 
     public string Id { get; set; } = null!;

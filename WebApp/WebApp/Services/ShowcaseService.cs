@@ -5,7 +5,7 @@ namespace WebApp.Services;
 public class ShowcaseService
 {
 
-    private readonly ShowcaseModel[] showcases = new ShowcaseModel[]
+    private readonly Showcase[] showcases = new Showcase[]
     {
         new()
         {
@@ -22,10 +22,10 @@ public class ShowcaseService
 
     public bool ShowLatest { get; set; }
 
-    public ShowcaseModel[] GetShowcases() =>
+    public Showcase[] GetShowcases() =>
         showcases;
 
-    public ShowcaseModel? GetLatest() =>
+    public Showcase? GetLatest() =>
         showcases.LastOrDefault();
 
 }
