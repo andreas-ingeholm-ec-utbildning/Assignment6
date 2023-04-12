@@ -16,6 +16,6 @@ public class ProfileEntity
     public string? PostalCode { get; set; } = null!;
     public string? City { get; set; } = null!;
 
-    public UserEntity User { get; set; } = null!;
+    //public UserEntity User { get; set; } = null!;
 
 }

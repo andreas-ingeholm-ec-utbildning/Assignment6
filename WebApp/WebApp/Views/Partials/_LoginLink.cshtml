@@ -1,0 +1,9 @@
+﻿@if(signInManager.IsSignedIn(User)) 
+{
+    <span class="me-4">@User.Identity?.Name</span>
+    <a class="link" asp-controller="logout" asp-action="index">Logout</a>
+}
+else
+{
+    <a class="link" asp-controller="login" asp-action="index">Login</a>
+}

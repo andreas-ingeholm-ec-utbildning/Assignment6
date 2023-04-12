@@ -10,7 +10,7 @@
         </nav>
         <nav class="menu-icons">
             <a class="link" asp-controller="products" asp-action="search"><i class="fa-regular fa-search"></i></a>
-            <a class="link" asp-controller="account" asp-action="login">Login</a>
+            <partial name="/Views/Partials/_LoginLink.cshtml"/>
             <a class="link" asp-controller="shopping" asp-action="cart"><i class="fa-solid fa-cart-shopping"></i></a>
         </nav>
         <div class="toggle">

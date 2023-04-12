@@ -62,7 +62,6 @@ header {
         font-size: 20px;
         overflow: hidden;
 
-
         @include lg {
             position: static;
             width: 100%;
@@ -119,6 +118,7 @@ header {
         padding: 20px;
         background-color: $color-dark-2;
         color: $color-white;
+        z-index: 2;
 
         @include xl {
             position: static;
