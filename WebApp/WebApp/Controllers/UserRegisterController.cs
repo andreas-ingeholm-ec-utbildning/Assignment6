@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using WebApp.Models.Identity;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebApp.Services;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers;
@@ -9,10 +8,10 @@ namespace WebApp.Controllers;
 public class UserRegisterController : Controller
 {
 
-    private readonly UserManager<User> userManager;
+    private readonly AuthService authService;
 
-    public UserRegisterController(UserManager<User> userManager) =>
-        this.userManager = userManager;
+    public UserRegisterController(AuthService authService) =>
+        this.authService = authService;
 
     [HttpGet]
     public IActionResult Index() =>
@@ -23,15 +22,14 @@ public class UserRegisterController : Controller
     {
 
         if (ModelState.IsValid)
-            if (await userManager.FindByEmailAsync(view.Email) is not null)
+            if (await authService.ExistsAsync(view.Email))
                 ModelState.AddModelError("", "A user with the specified email address already exists.");
             else
             {
-                var result = await userManager.CreateAsync(view, view.Password);
-                if (!result.Succeeded)
-                    ModelState.AddModelError("", string.Join("\n", result.Errors.Select(e => e.Description)));
-                else
+                if (await authService.RegisterAsync(view))
                     return RedirectToAction("Index", "login");
+                else
+                    ModelState.AddModelError("", "Something went wrong when creating user.");
             }
 
         return View(view);

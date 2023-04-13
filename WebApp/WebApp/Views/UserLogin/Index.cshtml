@@ -1,7 +1,5 @@
 ﻿@model UserLoginView
-@{
-    ViewData["Title"] = "Login";
-}
+@{ ViewData["Title"] = "Login"; }
 
 <div class="container mt-5">
     <div class="d-flex justify-content-center">
@@ -14,11 +12,16 @@
                 <input asp-for="Email" class="form-control" />
                 <small class="text-danger"><span asp-validation-for="Email"></span></small>
             </div>
-
+            
             <div class="mb-3">
                 <label asp-for="Password" class="form-label"></label>
                 <input asp-for="Password" class="form-control" />
                 <small class="text-danger"><span asp-validation-for="Password"></span></small>
+            </div>
+
+            <div class="mb-3 d-flex flex-row">
+                @Html.LabelFor(u => u.RememberMe)
+                @Html.CheckBoxFor(u => u.RememberMe)
             </div>
 
             <div class="mt-3">

@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WebApp.Models.Entities;
+using WebApp.Models.Identity;
 
 namespace WebApp.ViewModels;
 
@@ -41,5 +43,23 @@ public class UserRegisterView
 
     [Display(Name = "City")]
     public string? City { get; set; }
+
+    public static implicit operator User(UserRegisterView view) =>
+        new()
+        {
+            UserName = view.Email,
+            PhoneNumber = view.PhoneNumber,
+            Email = view.Email,
+        };
+
+    public static implicit operator UserProfileEntity(UserRegisterView view) =>
+        new()
+        {
+            FirstName = view.FirstName,
+            LastName = view.LastName,
+            StreetName = view.StreetName,
+            PostalCode = view.PostalCode,
+            City = view.City,
+        };
 
 }

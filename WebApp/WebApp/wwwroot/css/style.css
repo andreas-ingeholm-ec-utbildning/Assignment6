@@ -50,6 +50,12 @@ ol, ul {
   margin-bottom: 20px;
 }
 
+input[type=checkbox] {
+  width: auto;
+  margin-left: 6px;
+  align-self: center;
+}
+
 .btn-toggle {
   font-family: "Poppins", sans-serif;
   font-size: 1.8em;

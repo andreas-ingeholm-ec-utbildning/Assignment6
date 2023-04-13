@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 using WebApp.Services;
 using WebApp.ViewModels;
@@ -25,14 +26,17 @@ public class ProductsController : Controller
         return View();
     }
 
+    [Authorize(Roles = UserRole.Admin)]
     public IActionResult Manage() =>
         View();
 
     #region Register
 
+    [Authorize(Roles = UserRole.Admin)]
     public IActionResult Register() => View();
 
     [HttpPost]
+    [Authorize(Roles = UserRole.Admin)]
     public async Task<IActionResult> Register(ProductRegisterView data)
     {
 
@@ -47,6 +51,7 @@ public class ProductsController : Controller
     #endregion
     #region Edit
 
+    [Authorize(Roles = UserRole.Admin)]
     public async Task<IActionResult> Edit(Guid id)
     {
 
@@ -58,6 +63,7 @@ public class ProductsController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = UserRole.Admin)]
     public async Task<IActionResult> Edit(ProductEditView data)
     {
 
@@ -71,6 +77,7 @@ public class ProductsController : Controller
     #endregion
     #region Delete
 
+    [Authorize(Roles = UserRole.Admin)]
     public async Task<IActionResult> Delete(Guid id)
     {
 

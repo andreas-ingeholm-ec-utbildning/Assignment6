@@ -1,6 +1,6 @@
 ﻿@if(signInManager.IsSignedIn(User)) 
 {
-    <span class="me-4">@User.Identity?.Name</span>
+    <a asp-controller="user" asp-action="index" class="me-4 text-nowrap">@User.FindFirst("DisplayName")?.Value</a>
     <a class="link" asp-controller="logout" asp-action="index">Logout</a>
 }
 else

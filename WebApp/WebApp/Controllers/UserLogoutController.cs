@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebApp.Models.Identity;
+using WebApp.Services;
 
 namespace WebApp.Controllers;
 
@@ -8,16 +8,17 @@ namespace WebApp.Controllers;
 public class UserLogoutController : Controller
 {
 
-    private readonly SignInManager<User> signInManager;
+    private readonly AuthService authService;
 
-    public UserLogoutController(SignInManager<User> signInManager) =>
-        this.signInManager = signInManager;
+    public UserLogoutController(AuthService authService) =>
+        this.authService = authService;
 
+    [Authorize]
     public async Task<IActionResult> Index()
     {
-        if (signInManager.IsSignedIn(User))
+        if (authService.IsSignedIn(User))
         {
-            await signInManager.SignOutAsync();
+            await authService.LogOutAsync();
             return RedirectToAction("index", "home");
         }
         else

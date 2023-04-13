@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using WebApp.Models.Identity;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebApp.Services;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers;
@@ -9,10 +8,10 @@ namespace WebApp.Controllers;
 public class UserLoginController : Controller
 {
 
-    private readonly SignInManager<User> signInManager;
+    private readonly AuthService authService;
 
-    public UserLoginController(SignInManager<User> signInManager) =>
-        this.signInManager = signInManager;
+    public UserLoginController(AuthService authService) =>
+        this.authService = authService;
 
     [HttpGet]
     public IActionResult Index() =>
@@ -23,14 +22,10 @@ public class UserLoginController : Controller
     {
 
         if (ModelState.IsValid)
-        {
-
-            var result = await signInManager.PasswordSignInAsync(view.Email, view.Password, false, false);
-            if (result.Succeeded)
+            if (await authService.LoginAsync(view))
                 return RedirectToAction("Index", "Home");
             else
                 ModelState.AddModelError("", "Incorrect email address or password.");
-        }
 
         return View(view);
 

@@ -34,7 +34,7 @@ public class ProductService
     }
 
     public async Task<IEnumerable<Product>> EnumerateAsync() =>
-         (await context.Products.ToListAsync()).Select(p => (Product?)p).OfType<Product>();
+         (await context.Products.ToArrayAsync()).Select(p => (Product?)p).OfType<Product>();
 
     public async Task<Product?> FindProduct(Guid id) =>
         await context.Products.FirstOrDefaultAsync(p => p.ID == id);
