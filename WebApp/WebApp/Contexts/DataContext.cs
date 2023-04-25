@@ -10,5 +10,6 @@ public class DataContext : DbContext
     { }
 
     public DbSet<ProductEntity> Products { get; set; }
+    public DbSet<ProductCategoryEntity> Categories { get; set; }
 
 }

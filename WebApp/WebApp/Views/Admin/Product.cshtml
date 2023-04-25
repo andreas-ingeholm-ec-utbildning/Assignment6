@@ -1,0 +1,14 @@
+﻿@model ProductEditView
+@{ ViewData["Title"] = $"Editing {Model.Form.Name}..."; }
+
+<div class="d-flex container">
+
+    <div class="w-max-200px">
+        <partial name="/Views/Partials/Admin/_Sidebar.cshtml" />
+    </div>
+
+    <div class="flex-grow-1 d-flex justify-content-center">
+        <partial name="/Views/Partials/Forms/_EditProduct.cshtml" model="@Model" />
+    </div>
+
+</div>

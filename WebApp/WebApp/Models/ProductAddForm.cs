@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using WebApp.Models.Entities;
 
-namespace WebApp.ViewModels;
+namespace WebApp.Models;
 
-public class ProductRegisterView
+public class ProductAddForm
 {
 
     [Required(ErrorMessage = "You must assign a name to the product.")]
@@ -16,5 +17,16 @@ public class ProductRegisterView
     [DisplayName("Price *")]
     [DataType(DataType.Currency)]
     public decimal Price { get; set; }
+
+    public ProductCategory Category { get; set; } = null!;
+
+    public static implicit operator ProductEntity(ProductAddForm form) =>
+        new()
+        {
+            Name = form.Name,
+            Description = form.Description,
+            Price = form.Price,
+            CategoryId = form.Category.Value
+        };
 
 }

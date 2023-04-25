@@ -1,0 +1,7 @@
+﻿@model ProductEditView;
+
+<div class="col-6">
+    <div class="text-info my-2">ID: @Model.ID</div>
+    <partial name="./Views/Partials/Forms/_EditProduct.cshtml" model="@Model" />
+    <a asp-controller="products" asp-action="delete" asp-route-id="@Model.ID">Delete product...</a>
+</div>

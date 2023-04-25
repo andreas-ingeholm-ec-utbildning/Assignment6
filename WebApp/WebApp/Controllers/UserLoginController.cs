@@ -4,7 +4,7 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers;
 
-[Route("login")]
+[Route("account/login")]
 public class UserLoginController : Controller
 {
 

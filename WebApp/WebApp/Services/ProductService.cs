@@ -1,29 +1,37 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebApp.Contexts;
-using WebApp.Models;
+﻿using WebApp.Models;
 using WebApp.Models.Entities;
-using WebApp.ViewModels;
+using WebApp.Repositories;
 
 namespace WebApp.Services;
 
 public class ProductService
 {
 
-    private readonly DataContext context;
+    readonly CategoryService categoryService;
+    readonly Repo<ProductEntity> productRepo;
 
-    public ProductService(DataContext context) =>
-        this.context = context;
+    public ProductService(CategoryService categoryService, Repo<ProductEntity> productRepo)
+    {
+        this.categoryService = categoryService;
+        this.productRepo = productRepo;
+    }
 
-    public async Task<Product?> CreateAsync(ProductRegisterView data)
+    public async Task<IEnumerable<ProductEntity>> EnumerateAsync() =>
+        await productRepo.EnumerateAsync();
+
+    public async Task<Product?> FindProduct(Guid id) =>
+        await productRepo.GetAsync(p => p.ID == id);
+
+    public async Task<Product?> CreateAsync(ProductAddForm form)
     {
 
         try
         {
 
-            var entity = (ProductEntity)data;
-            _ = await context.Products.AddAsync(entity);
-            _ = await context.SaveChangesAsync();
-            return entity;
+            var entity = (ProductEntity)form;
+            entity.CategoryId = (await categoryService.GetOrCreateAsync(form.Category)).ID;
+
+            return await productRepo.AddAsync(entity);
 
         }
         catch
@@ -33,24 +41,20 @@ public class ProductService
 
     }
 
-    public async Task<IEnumerable<Product>> EnumerateAsync() =>
-         (await context.Products.ToArrayAsync()).Select(p => (Product?)p).OfType<Product>();
-
-    public async Task<Product?> FindProduct(Guid id) =>
-        await context.Products.FirstOrDefaultAsync(p => p.ID == id);
-
-    public async Task<bool> EditAsync(ProductEditView data)
+    public async Task<bool> EditAsync(ProductEditForm form)
     {
 
-        var entity = await context.Products.FirstOrDefaultAsync(p => p.ID == data.ID);
-        if (entity is null)
-            return false;
+        //var entity = await context.Products.FirstOrDefaultAsync(p => p.ID == form.ID);
+        //if (entity is null)
+        //    return false;
 
-        entity.Name = data.Name ?? entity.Name;
-        entity.Description = data.Description ?? entity.Description;
-        entity.Price = data.Price ?? entity.Price;
+        //entity.Name = form.Name;
+        //entity.Description = form.Description;
+        //entity.Price = form.Price;
+        //entity.CategoryID = (await categoryService.GetOrCreateAsync(form.Category)).ID;
 
-        _ = await context.SaveChangesAsync();
+        //_ = await context.SaveChangesAsync();
+
         return true;
 
     }
@@ -58,12 +62,12 @@ public class ProductService
     public async Task<bool> DeleteAsync(Guid id)
     {
 
-        var entity = await context.Products.FirstOrDefaultAsync(p => p.ID == id);
-        if (entity is null)
-            return false;
+        //var entity = await context.Products.FirstOrDefaultAsync(p => p.ID == id);
+        //if (entity is null)
+        //    return false;
 
-        _ = context.Remove(entity);
-        _ = await context.SaveChangesAsync();
+        //_ = context.Remove(entity);
+        //_ = await context.SaveChangesAsync();
 
         return true;
 

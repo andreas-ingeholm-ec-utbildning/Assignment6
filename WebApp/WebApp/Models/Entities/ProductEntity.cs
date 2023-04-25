@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using WebApp.ViewModels;
 
 namespace WebApp.Models.Entities;
 
@@ -13,13 +12,8 @@ public class ProductEntity
     [Column(TypeName = "money")]
     public decimal Price { get; set; }
 
-    public static implicit operator ProductEntity(ProductRegisterView data) =>
-        new()
-        {
-            Name = data.Name,
-            Description = data.Description,
-            Price = data.Price,
-        };
+    public Guid CategoryId { get; set; }
+    public ProductCategoryEntity Category { get; set; } = null!;
 
     public static implicit operator Product?(ProductEntity? entity) =>
         entity is null

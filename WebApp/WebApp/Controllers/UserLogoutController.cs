@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebApp.Services;
 
 namespace WebApp.Controllers;
@@ -13,7 +12,6 @@ public class UserLogoutController : Controller
     public UserLogoutController(AuthService authService) =>
         this.authService = authService;
 
-    [Authorize]
     public async Task<IActionResult> Index()
     {
         if (authService.IsSignedIn(User))
