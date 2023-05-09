@@ -1,0 +1,54 @@
+﻿@model UserEditAdminView;
+
+@{
+    var roles = UserRole.Enumerate();
+}
+
+<form method="post" novalidate>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="FirstName" class="form-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <small><span asp-validation-for="FirstName" class="text-danger"></span></small>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="LastName" class="form-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <small><span asp-validation-for="LastName" class="text-danger"></span></small>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StreetName" class="form-label"></label>
+        <input asp-for="StreetName" class="form-control" />
+        <small><span asp-validation-for="StreetName" class="text-danger"></span></small>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PostalCode" class="form-label"></label>
+        <input asp-for="PostalCode" class="form-control" />
+        <small><span asp-validation-for="PostalCode" class="text-danger"></span></small>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="City" class="form-label"></label>
+        <input asp-for="City" class="form-control" />
+        <small><span asp-validation-for="City" class="text-danger"></span></small>
+    </div>
+
+    <div class="mb-3">
+        <select asp-for="Role">
+            @foreach (var role in roles)
+            {
+                <option value="@role">@role</option>
+            }
+        </select>
+    </div>
+
+    <div class="d-grid mt-2">
+        <button type="submit">Save</button>
+    </div>
+
+</form>

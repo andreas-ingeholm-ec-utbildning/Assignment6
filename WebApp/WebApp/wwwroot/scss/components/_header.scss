@@ -23,12 +23,12 @@ header {
         grid-template-columns: 1fr 1fr;
         grid-template-areas: "logo toggle";
 
-        @include lg {
+        @include xl {
             grid-template-columns: 4fr 4fr;
             grid-template-areas: "logo menulinks";
         }
 
-        @include xl {
+        @include xxl {
             grid-template-columns: 4fr 4fr 1fr;
             grid-template-areas: "logo menulinks menuicons";
         }
@@ -62,7 +62,7 @@ header {
         font-size: 20px;
         overflow: hidden;
 
-        @include lg {
+        @include xl {
             position: static;
             width: 100%;
             font-size: 16px;
@@ -74,7 +74,7 @@ header {
             align-items: center;
         }
 
-        @include xl {
+        @include xxl {
             margin-right: 20px;
         }
 
@@ -92,7 +92,7 @@ header {
                 background-color: $color-dark-1
             }
 
-            @include lg {
+            @include xl {
                 color: $color-dark-0;
                 border: none;
                 padding: 0;
@@ -160,7 +160,7 @@ header {
         text-align: right;
         z-index: 1;
 
-        @include lg {
+        @include xl {
             display: none;
         }
     }

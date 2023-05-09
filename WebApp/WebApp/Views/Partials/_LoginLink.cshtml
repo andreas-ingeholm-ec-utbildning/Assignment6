@@ -1,9 +1,9 @@
 ﻿@if(signInManager.IsSignedIn(User)) 
 {
-    <a asp-controller="user" asp-action="index" class="me-4 text-nowrap">@User.FindFirst("DisplayName")?.Value</a>
-    <a class="link" asp-controller="logout" asp-action="index">Logout</a>
+    <a class="link text-nowrap me-4" asp-controller="user" asp-action="index">@User.FindFirst("DisplayName")?.Value</a>
+    <a class="link" asp-controller="user" asp-action="logout">Logout</a>
 }
 else
 {
-    <a class="link" asp-controller="login" asp-action="index">Login</a>
+    <a class="link" asp-controller="user" asp-action="login">Login</a>
 }

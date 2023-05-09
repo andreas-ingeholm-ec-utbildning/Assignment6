@@ -1,22 +1,34 @@
-﻿<div class="header-spacer"></div>
+﻿@using System.Security.Claims;
+<div class="header-spacer"></div>
 
 <header>
     <div class="container">
+        
         <a asp-controller="home" asp-action="index"><div class="logo"><img src="~/images/logo.svg" alt="">bmerketo</div></a>
+        
         <nav id="menu" class="menu-links">
             <a class="link" asp-controller="home" asp-action="index">HOME</a>
             <a class="link" asp-controller="products" asp-action="index">PRODUCTS</a>
             <a class="link" asp-controller="contacts" asp-action="index">CONTACT</a>
+
+            @if (User.HasClaim(ClaimTypes.Role, UserRole.Admin))
+            {
+                <a class="link" asp-controller="admin">Admin console</a>
+            }
+
         </nav>
+
         <nav class="menu-icons">
             <a class="link me-5" asp-controller="products" asp-action="search"><i class="fa-regular fa-search"></i></a>
             <partial name="/Views/Partials/_LoginLink.cshtml"/>
             <a class="link" asp-controller="shopping" asp-action="cart"><i class="fa-solid fa-cart-shopping"></i></a>
         </nav>
+
         <div class="toggle">
             <button class="btn-toggle btn-outline-white" data-option="toggle" data-target="#menu">
                 <i id="icon" class="fa-regular fa-bars"></i>
             </button>
         </div>
+
     </div>
 </header>

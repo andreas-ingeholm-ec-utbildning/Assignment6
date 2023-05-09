@@ -1,3 +1,8 @@
 ﻿@{ ViewData["Title"] = "Management console"; }
 
-<partial name="/Views/Partials/Admin/_Sidebar.cshtml"/>
+<div id="admin-root" class="d-flex">
+    <partial name="/Views/Partials/Admin/_Sidebar.cshtml"/>
+    <div id="content">
+        <partial name="/Views/Partials/Admin/_NoItemSelected.cshtml"/>
+    </div>
+</div>

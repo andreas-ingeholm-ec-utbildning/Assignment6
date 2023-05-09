@@ -29,6 +29,9 @@ public class AuthService
     public async Task<bool> ExistsAsync(string emailAddress) =>
         await userManager.FindByEmailAsync(emailAddress) is not null;
 
+    public async Task<User?> FindByEmailAsync(string emailAddress) =>
+        await userManager.FindByEmailAsync(emailAddress);
+
     public async Task<bool> RegisterAsync(UserRegisterView view)
     {
 
@@ -39,7 +42,8 @@ public class AuthService
             await seedService.SeedRoles();
 
             //First user will be admin, otherwise user
-            var role = !await userManager.Users.AnyAsync()
+            var role =
+                !await userManager.Users.AnyAsync()
                 ? UserRole.Admin
                 : UserRole.User;
 
@@ -47,6 +51,7 @@ public class AuthService
             _ = await userManager.CreateAsync(user, view.Password);
 
             _ = await userManager.AddToRoleAsync(user, role);
+            _ = await userManager.AddClaimAsync(user, new(ClaimTypes.Role, role));
 
             var profile = (UserProfileEntity)view;
             profile.UserID = user.Id;
@@ -61,6 +66,9 @@ public class AuthService
             return false;
         }
     }
+
+    public async Task<string> GetRoleAsync(User user) =>
+        (await userManager.GetRolesAsync(user)).First();
 
     public async Task<bool> LoginAsync(UserLoginView view)
     {

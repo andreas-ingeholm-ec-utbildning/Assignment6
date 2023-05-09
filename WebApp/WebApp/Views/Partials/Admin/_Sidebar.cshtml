@@ -1,18 +1,38 @@
 ﻿@inject ProductService productService
-@{ var products = await productService.EnumerateAsync(); }
+@inject UserService userService
+@{
+    var products = await productService.EnumerateAsync();
+    var users = await userService.EnumerateProfiles();
+}
 
-<h5>Products:</h5>
-<ul class="p-0 me-4">
+<nav class="p-4">
 
-    @if (products is not null)
-        foreach (var product in products)
-        {
-            <li>
-                <a asp-controller="admin" asp-action="product" asp-route-id="@product.ID">@product.Name</a>
-            </li>
-        }
+    <h5>Products:</h5>
+    <ul class="p-0 me-4">
 
-    <li class="mt-2"><a asp-controller="product" asp-action="add">Create new product...</a></li>
+        @if (products is not null)
+            foreach (var product in products)
+            {
+                <li>
+                    <a asp-controller="admin" asp-action="product" asp-route-id="@product.ID">@product.Name</a>
+                </li>
+            }
 
-</ul>
+        <li class="mt-2"><a asp-action="addproduct">Create new product...</a></li>
 
+    </ul>
+
+    <h5 class="mt-4">Users:</h5>
+    <ul class="p-0">
+
+        @if (users is not null)
+            foreach (var user in users)
+            {
+                <li>
+                    <a asp-controller="admin" asp-action="user" asp-route-id="@user.UserID">@user.User.UserName</a>
+                </li>
+            }
+
+    </ul>
+
+</nav>

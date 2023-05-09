@@ -6,6 +6,7 @@ html, body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   color: #636363;
+  margin-bottom: 84px;
 }
 
 .open-menu {
@@ -346,13 +347,13 @@ header .container {
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "logo toggle";
 }
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   header .container {
     grid-template-columns: 4fr 4fr;
     grid-template-areas: "logo menulinks";
   }
 }
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
   header .container {
     grid-template-columns: 4fr 4fr 1fr;
     grid-template-areas: "logo menulinks menuicons";
@@ -384,7 +385,7 @@ header .menu-links {
   font-size: 20px;
   overflow: hidden;
 }
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   header .menu-links {
     position: static;
     width: 100%;
@@ -397,7 +398,7 @@ header .menu-links {
     align-items: center;
   }
 }
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
   header .menu-links {
     margin-right: 20px;
   }
@@ -415,7 +416,7 @@ header .menu-links .link {
 header .menu-links .link:hover {
   background-color: #202020;
 }
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   header .menu-links .link {
     color: #000000;
     border: none;
@@ -479,7 +480,7 @@ header .toggle {
   text-align: right;
   z-index: 1;
 }
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   header .toggle {
     display: none;
   }
@@ -490,6 +491,7 @@ footer {
   padding: 30px;
   background-color: #292929;
   color: #AEAEAE;
+  z-index: 2;
 }
 footer .container {
   display: flex;
@@ -820,4 +822,27 @@ footer .container {
     display: flex;
     justify-self: flex-start;
   }
+}
+
+#admin-root nav {
+  background-color: lightgray;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+#admin-root #content {
+  width: 100%;
+  margin-left: 22px;
+  margin-bottom: 22px;
+  align-content: center;
+}
+#admin-root #content > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+#admin-root ul {
+  margin-bottom: 0;
 }

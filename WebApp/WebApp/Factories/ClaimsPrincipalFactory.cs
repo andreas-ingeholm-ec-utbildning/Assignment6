@@ -6,12 +6,13 @@ using WebApp.Services;
 
 namespace WebApp.Factories;
 
-public class ClaimsPrincipalFactory : UserClaimsPrincipalFactory<User>
+public class ClaimsPrincipalFactory : UserClaimsPrincipalFactory<User, IdentityRole<Guid>>
 {
 
     readonly UserService userService;
 
-    public ClaimsPrincipalFactory(UserManager<User> userManager, IOptions<IdentityOptions> optionsAccessor, UserService userService) : base(userManager, optionsAccessor) =>
+    public ClaimsPrincipalFactory(UserManager<User> userManager, RoleManager<IdentityRole<Guid>> roleManager, IOptions<IdentityOptions> optionsAccessor, UserService userService) :
+        base(userManager, roleManager, optionsAccessor) =>
         this.userService = userService;
 
     protected override async Task<ClaimsIdentity> GenerateClaimsAsync(User user)

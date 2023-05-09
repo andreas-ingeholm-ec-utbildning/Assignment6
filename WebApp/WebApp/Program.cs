@@ -12,11 +12,12 @@ using WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("products")));
 builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("identity")));
+
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<SeedService>();
 builder.Services.AddScoped<ProductService>();
@@ -33,8 +34,14 @@ builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
     options.User.RequireUniqueEmail = true;
     options.Password.RequiredLength = 8;
 }).
+AddRoles<IdentityRole<Guid>>().
 AddEntityFrameworkStores<IdentityContext>().
 AddClaimsPrincipalFactory<ClaimsPrincipalFactory>();
+
+builder.Services.AddScoped<IUserClaimsPrincipalFactory<User>, ClaimsPrincipalFactory>();
+
+builder.Services.AddAuthorization(options =>
+    options.AddPolicy(UserRole.Admin, policy => policy.RequireRole(UserRole.Admin)));
 
 var app = builder.Build();
 app.UseHsts();

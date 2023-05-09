@@ -1,4 +1,9 @@
-﻿@model ProductAddView;
+﻿@inject CategoryService categoryService;
+@model ProductAddView;
+
+@{
+    var categories = await categoryService.EnumerateCategoriesAsync(); 
+}
 
 <form method="post" novalidate>
 
@@ -24,7 +29,7 @@
 
     <div class="mb-3">
         <select asp-for="Form.Category">
-            @foreach (var category in Model.Categories)
+            @foreach (var category in categories)
             {
                 <option value="@category.Value">@category.Name</option>
             }

@@ -18,19 +18,4 @@
 
 }
 
-function updateFooterPosition(scrollHeight, innerHeight) {
-
-    try {
-
-        const footer = document.querySelector("footer");
-        const isBodyLargerThanScreen = scrollHeight >= innerHeight + footer.scrollHeight;
-
-        footer.classList.toggle("position-fixed-bottom", !isBodyLargerThanScreen);
-        footer.classList.toggle("position-static", isBodyLargerThanScreen);
-
-    } catch { }
-
-}
-
 toggleMenu('[data-option="toggle"]');
-updateFooterPosition(document.body.scrollHeight, window.innerHeight);
