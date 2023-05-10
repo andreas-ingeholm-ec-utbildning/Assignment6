@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using WebApp.Models.Entities;
+﻿using WebApp.Models.Entities;
 
 namespace WebApp.ViewModels;
 
@@ -7,7 +6,10 @@ public class UserEditAdminView : UserEditView
 {
 
     //Set from AdminController
-    [JsonIgnore] public bool IsLoggedIn { get; set; }
+    public bool IsLoggedIn { get; set; }
+
+    //For display
+    public string? Email { get; set; }
 
     public Guid ID { get; set; }
     public string? Role { get; set; }
@@ -16,6 +18,7 @@ public class UserEditAdminView : UserEditView
         new()
         {
             ID = user.UserID,
+            Email = user.User.Email,
             FirstName = user.FirstName,
             LastName = user.LastName,
             StreetName = user.StreetName,

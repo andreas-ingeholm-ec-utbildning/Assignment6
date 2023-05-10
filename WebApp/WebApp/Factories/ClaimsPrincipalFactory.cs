@@ -20,7 +20,7 @@ public class ClaimsPrincipalFactory : UserClaimsPrincipalFactory<User, IdentityR
 
         var claimsIdentity = await base.GenerateClaimsAsync(user);
 
-        var profile = await userService.GetProfileEntityAsync(user.Id);
+        var profile = await userService.GetAsync(user.Id);
         if (profile is not null)
             claimsIdentity.AddClaim(new("DisplayName", $"{profile.FirstName} {profile.LastName}"));
 

@@ -1,9 +1,17 @@
-﻿namespace WebApp.ViewModels;
+﻿using WebApp.Models.Entities;
 
-public class CategoryEditView
+namespace WebApp.ViewModels;
+
+public class CategoryEditView : CategoryAddView
 {
 
     public Guid ID { get; set; }
-    public string Name { get; set; } = null!;
+
+    public static implicit operator CategoryEditView(ProductCategoryEntity category) =>
+        new()
+        {
+            ID = category.ID,
+            Name = category.Name,
+        };
 
 }

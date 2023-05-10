@@ -2,6 +2,6 @@
 
 <div class="col-6">
     <div class="text-info my-2">ID: @Model.ID</div>
-    <partial name="./Views/Partials/Forms/_ProductEdit.cshtml" model="@Model" />
+    <partial name="/Views/Partials/Forms/_ProductEdit.cshtml" model="@Model" />
     <a asp-action="deleteproduct" asp-route-id="@Model.ID">Delete product...</a>
 </div>

@@ -21,7 +21,7 @@ public class UserController : Controller
     public async Task<IActionResult> Index()
     {
 
-        var user = await userService.GetProfileEntityAsync(User.Identity?.Name ?? string.Empty);
+        var user = await userService.GetAsync(User.Identity?.Name ?? string.Empty);
         if (user is null)
             return NotFound();
 
@@ -34,7 +34,7 @@ public class UserController : Controller
     public async Task<IActionResult> Index(UserEditView view)
     {
 
-        if (!ModelState.IsValid || !await userService.Update(view))
+        if (!ModelState.IsValid || !await userService.UpdateAsync(view))
             ModelState.AddModelError("", "Something went wrong when updating user.");
 
         return View(view);

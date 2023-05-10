@@ -25,4 +25,10 @@ public class Repo<TEntity> where TEntity : class
     public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate) =>
         await context.Set<TEntity>().FirstOrDefaultAsync(predicate);
 
+    public async Task DeleteAsync(TEntity entity)
+    {
+        _ = context.Set<TEntity>().Remove(entity);
+        _ = await context.SaveChangesAsync();
+    }
+
 }

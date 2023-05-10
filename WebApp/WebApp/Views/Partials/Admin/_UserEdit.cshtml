@@ -2,17 +2,14 @@
 
 <div class="col-6">
     
+    <div class="text-info my-2">@Model.Email</div>
     <div class="text-info my-2">ID: @Model.ID</div>
+
     <partial name="/Views/Partials/Forms/_UserEditAdmin.cshtml" model="@Model" />
 
     @if(Model.IsLoggedIn)
     {
         <div class="text-info my-1">Note that you may have to reload page after changing settings.</div>
     }
-    else
-    {
-        @*<a asp-action="deleteuser" asp-route-id="@Model.ID">Delete user...</a>*@
-    }
-    
 
 </div>

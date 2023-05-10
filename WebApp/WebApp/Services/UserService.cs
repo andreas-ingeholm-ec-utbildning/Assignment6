@@ -25,19 +25,19 @@ public class UserService
         this.serviceProvider = serviceProvider;
     }
 
-    public async Task<UserProfileEntity?> GetProfileEntityAsync(Guid userID) =>
+    public async Task<UserProfileEntity?> GetAsync(Guid userID) =>
         await identityContext.UserProfiles.Include(u => u.User).FirstOrDefaultAsync(u => u.UserID == userID);
 
-    public async Task<UserProfileEntity?> GetProfileEntityAsync(string email) =>
+    public async Task<UserProfileEntity?> GetAsync(string email) =>
         await identityContext.UserProfiles.Include(u => u.User).FirstOrDefaultAsync(u => u.User.Email == email);
 
-    public UserProfileEntity? GetProfileEntity(string email) =>
+    public UserProfileEntity? Get(string email) =>
         identityContext.UserProfiles.Include(u => u.User).FirstOrDefault(u => u.User.Email == email);
 
-    public async Task<IEnumerable<UserProfileEntity>> EnumerateProfiles() =>
+    public async Task<IEnumerable<UserProfileEntity>> EnumerateAsync() =>
         await identityContext.UserProfiles.Include(u => u.User).ToArrayAsync();
 
-    public async Task<bool> Update(UserEditView view)
+    public async Task<bool> UpdateAsync(UserEditView view)
     {
 
         if (GetLoggedInUser(out var userProfile))
@@ -56,10 +56,10 @@ public class UserService
 
     }
 
-    public async Task<bool> Update(UserEditAdminView view)
+    public async Task<bool> UpdateAsync(UserEditAdminView view)
     {
 
-        var userProfile = await GetProfileEntityAsync(view.ID);
+        var userProfile = await GetAsync(view.ID);
         if (userProfile is null)
             return false;
 
@@ -110,7 +110,7 @@ public class UserService
 
         userProfile = null;
         if (GetLoggedInEmail(out var email))
-            userProfile = GetProfileEntity(email);
+            userProfile = Get(email);
 
         return userProfile is not null;
 

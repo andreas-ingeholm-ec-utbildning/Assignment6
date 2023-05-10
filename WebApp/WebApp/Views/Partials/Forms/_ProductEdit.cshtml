@@ -2,7 +2,7 @@
 @model ProductAddView;
 
 @{
-    var categories = await categoryService.EnumerateCategoriesAsync(); 
+    var categories = await categoryService.EnumerateAsync(); 
 }
 
 <form method="post" novalidate>
