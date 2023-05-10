@@ -1,12 +1,8 @@
-﻿@using System.Security.Claims;
-@inject AuthService authService;
-@inject UserService userService;
-@model UserEditView;
+﻿@model UserEditView;
 
-@{
-    ViewData["Title"] = User.Identity?.Name;
-}
+@{ ViewData["Title"] = User.Identity?.Name; }
 
 <div class="col-6 mx-auto my-5">
     <partial name="/Views/Partials/Forms/_UserEdit.cshtml" model="@Model" />
+    <div class="text-info my-1">Note that you may have to reload page after changing settings.</div>
 </div>

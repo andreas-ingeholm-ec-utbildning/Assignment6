@@ -38,6 +38,10 @@ public class AdminController : Controller
 
         var view = (UserEditAdminView)user;
         view.Role = await authService.GetRoleAsync(user.User);
+
+        if (base.User.Identity?.Name is string email)
+            view.IsLoggedIn = userService.GetProfileEntity(email)?.UserID == id;
+
         return View(view);
 
     }

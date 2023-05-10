@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WebApp.Models.Identity;
 using WebApp.Services;
 using WebApp.ViewModels;
 
@@ -12,13 +10,11 @@ public class UserController : Controller
 
     readonly AuthService authService;
     readonly UserService userService;
-    readonly SignInManager<User> signInManager;
 
-    public UserController(AuthService authService, UserService userService, SignInManager<User> signInManager)
+    public UserController(AuthService authService, UserService userService)
     {
         this.authService = authService;
         this.userService = userService;
-        this.signInManager = signInManager;
     }
 
     [Authorize]
@@ -39,17 +35,9 @@ public class UserController : Controller
     {
 
         if (!ModelState.IsValid || !await userService.Update(view))
-        {
             ModelState.AddModelError("", "Something went wrong when updating user.");
-            return View(view);
-        }
-        else
-        {
-            //There seems to be no way to refresh cached claims? signInManager.RefreshSignInAsync() does not work.
-            //Logging out seems to be the only reliable solution.
-            await authService.LogOutAsync();
-            return RedirectToAction("login");
-        }
+
+        return View(view);
 
     }
 
