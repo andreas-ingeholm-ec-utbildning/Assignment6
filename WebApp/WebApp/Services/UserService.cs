@@ -43,9 +43,9 @@ public class UserService
         if (GetLoggedInUser(out var userProfile))
         {
 
-            await UpdateUserProfile(userProfile, view, true);
+            await UpdateUserProfileNoSave(userProfile, view);
+            _ = await userManager.UpdateAsync(userProfile.User);
             _ = await identityContext.SaveChangesAsync();
-
             await RefreshClaims(userProfile.User);
 
             return true;
@@ -53,42 +53,6 @@ public class UserService
         }
 
         return false;
-
-    }
-
-    public async Task<bool> UpdateAsync(UserEditAdminView view)
-    {
-
-        var userProfile = await GetAsync(view.ID);
-        if (userProfile is null)
-            return false;
-
-        await UpdateUserProfile(userProfile, view, false);
-
-        if (view.Role is UserRole.User or UserRole.Admin)
-            await SetRoleAsync(userProfile.User, view.Role);
-
-        await RefreshClaims(userProfile.User);
-
-        return true;
-
-    }
-
-    async Task UpdateUserProfile(UserProfileEntity userProfile, UserEditView view, bool saveClaims)
-    {
-
-        userProfile.FirstName = view.FirstName ?? userProfile.FirstName;
-        userProfile.LastName = view.LastName ?? userProfile.LastName;
-        userProfile.StreetName = view.StreetName ?? userProfile.StreetName;
-        userProfile.City = view.City ?? userProfile.City;
-        userProfile.PostalCode = view.PostalCode ?? userProfile.PostalCode;
-
-        //Update display name
-        _ = await userManager.RemoveClaimsAsync(userProfile.User, (await userManager.GetClaimsAsync(userProfile.User)).Where(c => c.Type == "DisplayName"));
-        _ = await userManager.AddClaimAsync(userProfile.User, new("DisplayName", $"{userProfile.FirstName} {userProfile.LastName}"));
-
-        if (saveClaims)
-            _ = await userManager.UpdateAsync(userProfile.User);
 
     }
 
@@ -116,16 +80,57 @@ public class UserService
 
     }
 
-    public async Task SetRoleAsync(User user, string role)
+    public async Task<bool> UpdateAsync(UserEditAdminView view)
     {
 
+        var userProfile = await GetAsync(view.ID);
+        if (userProfile is null)
+            return false;
+
+        await UpdateUserProfileNoSave(userProfile, view);
+
+        if (view.Role is UserRole.User or UserRole.Admin)
+            await SetRoleAsync(userProfile.User, view.Role);
+
+        _ = await userManager.UpdateAsync(userProfile.User);
+
+        _ = await identityContext.SaveChangesAsync();
+        await RefreshClaims(userProfile.User);
+
+        return true;
+
+    }
+
+    async Task UpdateUserProfileNoSave(UserProfileEntity userProfile, UserEditView view)
+    {
+
+        //Update info
+        userProfile.FirstName = view.FirstName ?? userProfile.FirstName;
+        userProfile.LastName = view.LastName ?? userProfile.LastName;
+        userProfile.StreetName = view.StreetName ?? userProfile.StreetName;
+        userProfile.City = view.City ?? userProfile.City;
+        userProfile.PostalCode = view.PostalCode ?? userProfile.PostalCode;
+
+        //Update DisplayName claim
+        _ = await userManager.RemoveClaimsAsync(userProfile.User, await GetClaimsAsync(userProfile.User, UserClaim.DisplayName));
+        _ = await userManager.AddClaimAsync(userProfile.User, new(UserClaim.DisplayName, $"{userProfile.FirstName} {userProfile.LastName}"));
+
+    }
+
+    async Task<IEnumerable<Claim>> GetClaimsAsync(User user, string claimType) =>
+       (await userManager.GetClaimsAsync(user)).Where(c => c.Type == claimType);
+
+    async Task SetRoleAsync(User user, string role)
+    {
+
+        //Clear current role and claim
         _ = await userManager.RemoveFromRoleAsync(user, UserRole.Admin);
         _ = await userManager.RemoveFromRoleAsync(user, UserRole.User);
         _ = await userManager.RemoveClaimAsync(user, (await userManager.GetClaimsAsync(user)).First(claim => claim.Type == ClaimTypes.Role));
 
+        //Add new role and claim
         _ = await userManager.AddToRoleAsync(user, role);
         _ = await userManager.AddClaimAsync(user, new(ClaimTypes.Role, role));
-        _ = await userManager.UpdateAsync(user);
 
     }
 

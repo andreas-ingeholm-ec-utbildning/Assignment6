@@ -22,7 +22,7 @@ public class ClaimsPrincipalFactory : UserClaimsPrincipalFactory<User, IdentityR
 
         var profile = await userService.GetAsync(user.Id);
         if (profile is not null)
-            claimsIdentity.AddClaim(new("DisplayName", $"{profile.FirstName} {profile.LastName}"));
+            claimsIdentity.AddClaim(new(UserClaim.DisplayName, $"{profile.FirstName} {profile.LastName}"));
 
         return claimsIdentity;
 
