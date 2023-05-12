@@ -1,5 +1,4 @@
 ﻿using WebApp.Contexts;
-using WebApp.Models;
 using WebApp.Models.Entities;
 using WebApp.Repositories;
 using WebApp.ViewModels;
@@ -18,18 +17,18 @@ public class CategoryService
         this.context = context;
     }
 
-    public async Task<ProductCategoryEntity> GetOrCreateAsync(ProductCategory category) =>
-        await categoryRepo.GetAsync(c => c.Name == category.Name) ??
-        await categoryRepo.AddAsync(new() { Name = category.Name });
+    public async Task<ProductCategoryEntity> GetOrCreateAsync(string name) =>
+        await categoryRepo.GetAsync(c => c.Name == name) ??
+        await categoryRepo.AddAsync(new() { Name = name });
 
-    public async Task<IEnumerable<ProductCategory>> EnumerateAsync() =>
-        (await categoryRepo.EnumerateAsync()).Select(c => new ProductCategory() { Name = c.Name, Value = c.ID });
+    public async Task<IEnumerable<ProductCategoryEntity>> EnumerateAsync() =>
+        (await categoryRepo.EnumerateAsync()).Select(c => new ProductCategoryEntity() { Name = c.Name, ID = c.ID });
 
     public async Task<ProductCategoryEntity?> GetAsync(Guid guid) =>
         await categoryRepo.GetAsync(c => c.ID == guid);
 
     public async Task<ProductCategoryEntity> CreateAsync(CategoryAddView view) =>
-        await GetOrCreateAsync(new() { Name = view.Name });
+        await GetOrCreateAsync(view.Name);
 
     public async Task<bool> Update(CategoryEditView view)
     {

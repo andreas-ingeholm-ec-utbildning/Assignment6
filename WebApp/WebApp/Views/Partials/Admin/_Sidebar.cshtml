@@ -24,7 +24,7 @@
         @foreach (var category in await categoryService.EnumerateAsync())
         {
             <li>
-                <a asp-controller="admin" asp-action="category" asp-route-id="@category.Value">@category.Name</a>
+                <a asp-controller="admin" asp-action="category" asp-route-id="@category.ID">@category.Name</a>
             </li>
         }
 

@@ -18,7 +18,7 @@ public class ProductAddForm
     [DataType(DataType.Currency)]
     public decimal Price { get; set; }
 
-    public ProductCategory Category { get; set; } = null!;
+    public ProductCategoryEntity Category { get; set; } = null!;
 
     public static implicit operator ProductEntity(ProductAddForm form) =>
         new()
@@ -26,7 +26,7 @@ public class ProductAddForm
             Name = form.Name,
             Description = form.Description,
             Price = form.Price,
-            CategoryId = form.Category.Value
+            CategoryId = form.Category.ID
         };
 
 }
