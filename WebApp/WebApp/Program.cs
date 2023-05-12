@@ -7,9 +7,6 @@ using WebApp.Models.Identity;
 using WebApp.Repositories;
 using WebApp.Services;
 
-//TODO: Products broken for some reason
-//TODO: Fix management pages
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
@@ -25,8 +22,10 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<ShowcaseService>();
 builder.Services.AddScoped<CollectionService>();
 builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<TagService>();
 builder.Services.AddScoped<Repo<ProductEntity>>();
 builder.Services.AddScoped<Repo<ProductCategoryEntity>>();
+builder.Services.AddScoped<Repo<TagEntity>>();
 
 builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
 {

@@ -12,8 +12,10 @@ public class ProductEntity
     [Column(TypeName = "money")]
     public decimal Price { get; set; }
 
-    public Guid CategoryId { get; set; }
-    public ProductCategoryEntity Category { get; set; } = null!;
+    public Guid? CategoryId { get; set; }
+    public ProductCategoryEntity? Category { get; set; }
+
+    public ICollection<ProductTagEntity> Tags { get; set; } = new HashSet<ProductTagEntity>();
 
     public static implicit operator Product?(ProductEntity? entity) =>
         entity is null
@@ -23,7 +25,9 @@ public class ProductEntity
             ID = entity.ID,
             Name = entity.Name,
             Description = entity.Description,
-            Price = entity.Price
+            Price = entity.Price,
+            Category = entity.Category,
+            Tags = entity.Tags,
         };
 
 }

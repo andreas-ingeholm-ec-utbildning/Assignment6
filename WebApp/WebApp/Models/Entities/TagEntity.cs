@@ -1,6 +1,6 @@
 ﻿namespace WebApp.Models.Entities;
 
-public class ProductCategoryEntity
+public class TagEntity
 {
 
     public Guid ID { get; set; } = Guid.NewGuid();

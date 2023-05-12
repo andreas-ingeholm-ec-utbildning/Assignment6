@@ -1,5 +1,6 @@
 ﻿@inject ProductService productService
 @inject CategoryService categoryService
+@inject TagService tagService
 @inject UserService userService
 
 <nav class="p-4">
@@ -29,6 +30,20 @@
         }
 
         <li class="mt-2"><a asp-action="addcategory">Create new category...</a></li>
+
+    </ul>
+
+    <h5 class="mt-4">Tags:</h5>
+    <ul class="p-0">
+
+        @foreach (var tag in await tagService.EnumerateAsync())
+        {
+            <li>
+                <a asp-controller="admin" asp-action="tag" asp-route-id="@tag.ID">@tag.Name</a>
+            </li>
+        }
+
+        <li class="mt-2"><a asp-action="addtag">Create new tag...</a></li>
 
     </ul>
 

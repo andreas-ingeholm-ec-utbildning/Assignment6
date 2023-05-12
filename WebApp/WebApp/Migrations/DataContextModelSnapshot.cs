@@ -43,7 +43,7 @@ namespace WebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -56,25 +56,96 @@ namespace WebApp.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
 
+                    b.Property<Guid?>("TagEntityID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("ID");
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("TagEntityID");
+
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("WebApp.Models.Entities.ProductTagEntity", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TagId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ID", "TagId");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("ProductTags");
+                });
+
+            modelBuilder.Entity("WebApp.Models.Entities.TagEntity", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("WebApp.Models.Entities.ProductEntity", b =>
                 {
                     b.HasOne("WebApp.Models.Entities.ProductCategoryEntity", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("WebApp.Models.Entities.TagEntity", null)
+                        .WithMany("Products")
+                        .HasForeignKey("TagEntityID");
 
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("WebApp.Models.Entities.ProductTagEntity", b =>
+                {
+                    b.HasOne("WebApp.Models.Entities.ProductEntity", "Product")
+                        .WithMany("Tags")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApp.Models.Entities.TagEntity", "Tag")
+                        .WithMany()
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Tag");
+                });
+
             modelBuilder.Entity("WebApp.Models.Entities.ProductCategoryEntity", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("WebApp.Models.Entities.ProductEntity", b =>
+                {
+                    b.Navigation("Tags");
+                });
+
+            modelBuilder.Entity("WebApp.Models.Entities.TagEntity", b =>
                 {
                     b.Navigation("Products");
                 });

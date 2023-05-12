@@ -1,6 +1,8 @@
-﻿using WebApp.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using WebApp.Models;
 using WebApp.Models.Entities;
 using WebApp.Repositories;
+using WebApp.ViewModels;
 
 namespace WebApp.Services;
 
@@ -22,14 +24,14 @@ public class ProductService
     public async Task<Product?> FindProduct(Guid id) =>
         await productRepo.GetAsync(p => p.ID == id);
 
-    public async Task<Product?> CreateAsync(ProductAddForm form)
+    public async Task<Product?> CreateAsync(ProductAddView view, IEnumerable<SelectListItem>? tags = null)
     {
 
         try
         {
 
-            var entity = (ProductEntity)form;
-            entity.CategoryId = form.Category.ID;
+            var entity = (ProductEntity)view;
+            entity.CategoryId = view.Category?.ID;
 
             return await productRepo.AddAsync(entity);
 
@@ -41,7 +43,7 @@ public class ProductService
 
     }
 
-    public async Task<bool> EditAsync(ProductEditForm form)
+    public async Task<bool> UpdateAsync(ProductEditView form)
     {
 
         //var entity = await context.Products.FirstOrDefaultAsync(p => p.ID == form.ID);
