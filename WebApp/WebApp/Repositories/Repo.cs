@@ -31,4 +31,10 @@ public class Repo<TEntity> where TEntity : class
         _ = await context.SaveChangesAsync();
     }
 
+    public async Task UpdateAsync(TEntity entity)
+    {
+        _ = context.Set<TEntity>().Update(entity);
+        _ = await context.SaveChangesAsync();
+    }
+
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using WebApp.Models;
+﻿using WebApp.Models;
 using WebApp.Models.Entities;
 using WebApp.Repositories;
 using WebApp.ViewModels;
@@ -9,14 +8,10 @@ namespace WebApp.Services;
 public class ProductService
 {
 
-    readonly CategoryService categoryService;
     readonly Repo<ProductEntity> productRepo;
 
-    public ProductService(CategoryService categoryService, Repo<ProductEntity> productRepo)
-    {
-        this.categoryService = categoryService;
+    public ProductService(Repo<ProductEntity> productRepo) =>
         this.productRepo = productRepo;
-    }
 
     public async Task<IEnumerable<ProductEntity>> EnumerateAsync() =>
         await productRepo.EnumerateAsync();
@@ -24,38 +19,34 @@ public class ProductService
     public async Task<Product?> FindProduct(Guid id) =>
         await productRepo.GetAsync(p => p.ID == id);
 
-    public async Task<Product?> CreateAsync(ProductAddView view, IEnumerable<SelectListItem>? tags = null)
+    public async Task<ProductEntity?> CreateAsync(ProductAddView view)
     {
 
         try
         {
-
             var entity = (ProductEntity)view;
-            entity.CategoryId = view.Category?.ID;
-
             return await productRepo.AddAsync(entity);
-
         }
-        catch
+        catch (Exception e)
         {
             return null;
         }
 
     }
 
-    public async Task<bool> UpdateAsync(ProductEditView form)
+    public async Task<bool> UpdateAsync(ProductEditView view)
     {
 
-        //var entity = await context.Products.FirstOrDefaultAsync(p => p.ID == form.ID);
-        //if (entity is null)
-        //    return false;
+        var product = await productRepo.GetAsync(p => p.ID == view.ID);
+        if (product is null)
+            return false;
 
-        //entity.Name = form.Name;
-        //entity.Description = form.Description;
-        //entity.Price = form.Price;
-        //entity.CategoryID = (await categoryService.GetOrCreateAsync(form.Category)).ID;
+        product.Name = view.Name;
+        product.Description = view.Description;
+        product.Price = view.Price;
+        product.CategoryID = view.Category;
 
-        //_ = await context.SaveChangesAsync();
+        await productRepo.UpdateAsync(product);
 
         return true;
 
@@ -64,12 +55,11 @@ public class ProductService
     public async Task<bool> DeleteAsync(Guid id)
     {
 
-        //var entity = await context.Products.FirstOrDefaultAsync(p => p.ID == id);
-        //if (entity is null)
-        //    return false;
+        var entity = await productRepo.GetAsync(p => p.ID == id);
+        if (entity is null)
+            return false;
 
-        //_ = context.Remove(entity);
-        //_ = await context.SaveChangesAsync();
+        await productRepo.DeleteAsync(entity);
 
         return true;
 

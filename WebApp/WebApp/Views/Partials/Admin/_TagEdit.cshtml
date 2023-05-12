@@ -1,7 +1,0 @@
-﻿@model TagEditView;
-
-<div class="col-6">
-    <div class="text-info my-2">ID: @Model.ID</div>
-    <partial name="/Views/Partials/Forms/_TagEdit.cshtml" model="@Model" />
-    <a asp-controller="admin" asp-action="deletetag" asp-route-id="@Model.ID">Delete tag...</a>
-</div>

@@ -7,15 +7,8 @@ public partial class AdminController
 {
 
     [HttpGet("product/add")]
-    public async Task<IActionResult> AddProduct()
-    {
-
-        ViewBag.Categories = await categoryService.EnumerateAsync();
-        ViewBag.Tags = await tagService.EnumerateFromNewProductAsync();
-
-        return View();
-
-    }
+    public IActionResult AddProduct() =>
+        View();
 
     [HttpPost("product/add")]
     public async Task<IActionResult> AddProduct(ProductAddView view)
@@ -23,12 +16,17 @@ public partial class AdminController
 
         if (ModelState.IsValid)
         {
-            var product = await productService.CreateAsync(view, ViewBag.Tags);
+
+            var product = await productService.CreateAsync(view);
+
             if (product is not null)
-                return RedirectToAction("user", routeValues: product.ID);
+                return RedirectToAction("product", routeValues: new { id = product.ID });
             else
                 ModelState.AddModelError("", "Something went wrong when creating product.");
+
         }
+        else
+            ModelState.AddModelError("", "Something went wrong when creating product.");
 
         return View(view);
 
@@ -37,38 +35,32 @@ public partial class AdminController
     [HttpGet]
     public async Task<IActionResult> Product(Guid id)
     {
-        return View();
-        //var product = await productService.FindProduct(id);
-        //if (product is null)
-        //    return NotFound();
 
-        //ViewBag.Categories = await categoryService.EnumerateAsync();
-        //ViewBag.Tags = await tagService.EnumerateFromAsync(product);
-
-        //return View((ProductEditView)product);
-
+        var product = await productService.FindProduct(id);
+        return
+            product is not null
+            ? View((ProductEditView)product)
+            : NotFound();
     }
 
     [HttpPost]
-    public IActionResult Product(ProductAddView view)
+    public async Task<IActionResult> ProductAsync(ProductEditView view)
     {
+
+        if (!ModelState.IsValid || !await productService.UpdateAsync(view))
+            ModelState.AddModelError("", "Something went wrong when updating product.");
+
         return View(view);
+
     }
 
-    [HttpDelete("product")]
+    [HttpGet("product")]
     public async Task<IActionResult> DeleteProduct(Guid id)
     {
-
-        var product = await productService.FindProduct(id);
-
-        if (product is not null)
-        {
-
+        if (await productService.DeleteAsync(id))
             return RedirectToAction("Index");
-        }
         else
             return View();
-
     }
 
 }

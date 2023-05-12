@@ -1,14 +1,11 @@
-﻿@inject ProductService productService
-@inject CategoryService categoryService
-@inject TagService tagService
-@inject UserService userService
+﻿@using WebApp.Models.Entities;
 
 <nav class="p-4">
 
     <h5>Products:</h5>
     <ul class="p-0 me-4">
 
-        @foreach (var product in await productService.EnumerateAsync())
+        @foreach (ProductEntity product in ViewBag.Products)
         {
             <li>
                 <a asp-controller="admin" asp-action="product" asp-route-id="@product.ID">@product.Name</a>
@@ -19,10 +16,10 @@
 
     </ul>
 
-    <h5 class="mt-4">Category:</h5>
+    <h5 class="mt-4">Categories:</h5>
     <ul class="p-0">
 
-        @foreach (var category in await categoryService.EnumerateAsync())
+        @foreach (ProductCategoryEntity category in ViewBag.Categories)
         {
             <li>
                 <a asp-controller="admin" asp-action="category" asp-route-id="@category.ID">@category.Name</a>
@@ -33,24 +30,10 @@
 
     </ul>
 
-    <h5 class="mt-4">Tags:</h5>
-    <ul class="p-0">
-
-        @foreach (var tag in await tagService.EnumerateAsync())
-        {
-            <li>
-                <a asp-controller="admin" asp-action="tag" asp-route-id="@tag.ID">@tag.Name</a>
-            </li>
-        }
-
-        <li class="mt-2"><a asp-action="addtag">Create new tag...</a></li>
-
-    </ul>
-
     <h5 class="mt-4">Users:</h5>
     <ul class="p-0">
 
-        @foreach (var user in await userService.EnumerateAsync())
+        @foreach (UserProfileEntity user in ViewBag.Users)
         {
             <li>
                 <a asp-controller="admin" asp-action="user" asp-route-id="@user.UserID">@user.User.UserName</a>

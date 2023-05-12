@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApp.Models.Entities;
 
 public class ProductEntity
 {
 
+    [Key]
     public Guid ID { get; set; } = Guid.NewGuid();
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
@@ -12,10 +14,8 @@ public class ProductEntity
     [Column(TypeName = "money")]
     public decimal Price { get; set; }
 
-    public Guid? CategoryId { get; set; }
+    public Guid? CategoryID { get; set; }
     public ProductCategoryEntity? Category { get; set; }
-
-    public ICollection<ProductTagEntity> Tags { get; set; } = new HashSet<ProductTagEntity>();
 
     public static implicit operator Product?(ProductEntity? entity) =>
         entity is null
@@ -27,7 +27,6 @@ public class ProductEntity
             Description = entity.Description,
             Price = entity.Price,
             Category = entity.Category,
-            Tags = entity.Tags,
         };
 
 }

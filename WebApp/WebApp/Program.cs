@@ -15,6 +15,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("products")));
 builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("identity")));
 
+builder.Services.AddScoped<Repo<ProductEntity>>();
+builder.Services.AddScoped<Repo<ProductCategoryEntity>>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<SeedService>();
 builder.Services.AddScoped<ProductService>();
@@ -22,10 +24,6 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<ShowcaseService>();
 builder.Services.AddScoped<CollectionService>();
 builder.Services.AddScoped<CategoryService>();
-builder.Services.AddScoped<TagService>();
-builder.Services.AddScoped<Repo<ProductEntity>>();
-builder.Services.AddScoped<Repo<ProductCategoryEntity>>();
-builder.Services.AddScoped<Repo<TagEntity>>();
 
 builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
 {

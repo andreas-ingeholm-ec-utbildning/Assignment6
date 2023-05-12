@@ -11,6 +11,5 @@ public class Product
     public decimal Price { get; set; }
 
     public ProductCategoryEntity? Category { get; set; }
-    public ICollection<ProductTagEntity> Tags { get; set; } = new HashSet<ProductTagEntity>();
 
 }

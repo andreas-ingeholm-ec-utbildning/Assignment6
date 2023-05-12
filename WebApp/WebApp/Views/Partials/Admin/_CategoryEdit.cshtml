@@ -1,6 +1,7 @@
 ﻿@model CategoryEditView;
 
 <div class="col-6">
+    <h4 class="my-4">Edit category:</h4>
     <div class="text-info my-2">ID: @Model.ID</div>
     <partial name="/Views/Partials/Forms/_CategoryEdit.cshtml" model="@Model" />
     <a asp-controller="admin" asp-action="deletecategory" asp-route-id="@Model.ID">Delete category...</a>

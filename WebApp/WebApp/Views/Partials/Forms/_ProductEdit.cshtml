@@ -35,16 +35,6 @@
         </select>
     </div>
 
-    <div class="mb-3">
-        @foreach (SelectListItem tag in ViewBag.Tags)
-        {
-            <div>
-                <input type="checkbox" name="Tags" value="@tag.Value" checked="@tag.Selected" class="form-check-input"/>
-                <label for="@tag.Value" class="form-check-label">@tag.Text</label>
-            </div>
-        }
-    </div>
-
     <div class="d-grid mt-2">
         <button type="submit" class="btn btn-primary py-2">Save</button>
     </div>

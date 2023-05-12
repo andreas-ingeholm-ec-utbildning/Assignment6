@@ -18,7 +18,7 @@ public class ProductAddView
     [DataType(DataType.Currency)]
     public decimal Price { get; set; }
 
-    public ProductCategoryEntity? Category { get; set; }
+    public Guid? Category { get; set; }
 
     public static implicit operator ProductEntity(ProductAddView view) =>
         new()
@@ -26,7 +26,7 @@ public class ProductAddView
             Name = view.Name,
             Description = view.Description,
             Price = view.Price,
-            CategoryId = view.Category?.ID,
+            CategoryID = view.Category,
         };
 
 }
