@@ -174,7 +174,8 @@ public class AdminController : Controller
         if (!ModelState.IsValid || !await userService.UpdateAsync(view))
             ModelState.AddModelError("", "Something went wrong when updating user.");
 
-        return View(view);
+        //Make sure page reloads for user, otherwise claims won't be refreshed
+        return Redirect(view.ID.ToString());
 
     }
 
