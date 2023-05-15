@@ -15,6 +15,7 @@ public class ProductEditView : ProductAddView
             Description = product.Description,
             Price = product.Price,
             Category = product.Category?.ID,
+            ExistingImageUrl = product.ImageUrl
         };
 
 }

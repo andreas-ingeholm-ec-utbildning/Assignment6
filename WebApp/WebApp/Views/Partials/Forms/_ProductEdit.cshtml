@@ -2,7 +2,7 @@
 @inject CategoryService categoryService;
 @model ProductAddView;
 
-<form method="post" novalidate>
+<form enctype="multipart/form-data" method="post" novalidate>
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -12,16 +12,27 @@
         <small><span asp-validation-for="Name" class="text-danger"></span></small>
     </div>
 
+    <div class="mb-5">
+        <label asp-for="Image" class="form-label"></label>
+        <input asp-for="Image" class="form-control" rows="4"/>
+        <small><span asp-validation-for="Image" class="text-danger"></span></small>
+    </div>
+
+    @if(Model?.ExistingImageUrl is not null)
+    {
+        <img class="product-image-preview" src="@Model.ExistingImageUrl" alt="@Model.ExistingImageUrl" />
+    }
+
+    <div>
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        <small><span asp-validation-for="Description" class="text-danger"></span></small>
+    </div>
+
     <div class="mb-3">
         <label asp-for="Price" class="form-label"></label>
         <input asp-for="Price" class="form-control" />
         <small><span asp-validation-for="Price" class="text-danger"></span></small>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Description" class="form-label"></label>
-        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
-        <small><span asp-validation-for="Description" class="text-danger"></span></small>
     </div>
 
     <div class="mb-3">

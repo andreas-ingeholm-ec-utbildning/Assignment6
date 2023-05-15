@@ -9,9 +9,13 @@ public class ProductService
 {
 
     readonly Repo<ProductEntity> productRepo;
+    readonly IWebHostEnvironment webHostEnvironment;
 
-    public ProductService(Repo<ProductEntity> productRepo) =>
+    public ProductService(Repo<ProductEntity> productRepo, IWebHostEnvironment webHostEnvironment)
+    {
         this.productRepo = productRepo;
+        this.webHostEnvironment = webHostEnvironment;
+    }
 
     public async Task<IEnumerable<ProductEntity>> EnumerateAsync() =>
         await productRepo.EnumerateAsync();
@@ -24,10 +28,18 @@ public class ProductService
 
         try
         {
+
             var entity = (ProductEntity)view;
-            return await productRepo.AddAsync(entity);
+
+            var product = await productRepo.AddAsync(entity);
+
+            if (view.Image is not null && await UploadImage(product, view.Image))
+                await productRepo.UpdateAsync(product);
+
+            return product;
+
         }
-        catch (Exception e)
+        catch
         {
             return null;
         }
@@ -46,9 +58,43 @@ public class ProductService
         product.Price = view.Price;
         product.CategoryID = view.Category;
 
+        if (view.Image is not null)
+            if (await UploadImage(product, view.Image))
+                view.ExistingImageUrl = product.ImageUrl;
+            else
+                return false;
+
         await productRepo.UpdateAsync(product);
 
         return true;
+
+    }
+
+    /// <summary>Saves an image to the server and sets <see cref="ProductEntity.ImageUrl"/>.</summary>
+    /// <remarks>Does not call <see cref="UpdateAsync(ProductEditView)"/>.</remarks>
+    async Task<bool> UploadImage(ProductEntity product, IFormFile image)
+    {
+
+        if (image is null)
+            return false;
+
+        try
+        {
+
+            var imageUrl = $"/images/products/{product.ID}_{image.FileName}";
+            product.ImageUrl = imageUrl;
+
+            var imagePath = $"{webHostEnvironment.WebRootPath}{product.ImageUrl}";
+            using var fs = new FileStream(imagePath, FileMode.Create, FileAccess.Write);
+
+            await image.CopyToAsync(fs);
+            return true;
+
+        }
+        catch (Exception)
+        {
+            return false;
+        }
 
     }
 

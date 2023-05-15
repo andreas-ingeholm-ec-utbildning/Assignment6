@@ -11,6 +11,11 @@ public class ProductAddView
     [DisplayName("Product name *")]
     public string Name { get; set; } = null!;
 
+    [DataType(DataType.Upload)]
+    public IFormFile? Image { get; set; }
+
+    public string? ExistingImageUrl { get; set; }
+
     public string? Description { get; set; }
 
     [Required(ErrorMessage = "You must assign a price for the product.")]

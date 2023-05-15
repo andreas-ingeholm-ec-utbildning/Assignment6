@@ -9,7 +9,16 @@ namespace WebApp.Controllers;
 public partial class AdminController : Controller
 {
 
-    //TODO: Add product images
+    //TODO: Add tags
+
+    //TODO: Add default products button
+
+    //TODO: Fix home page
+    //TODO: Fix products page
+    //TODO: Fix product page
+    //TODO: Add shopping cart
+    //TODO: Fix contact form
+    //TODO: Add documentation
 
     readonly AuthService authService;
     readonly UserService userService;

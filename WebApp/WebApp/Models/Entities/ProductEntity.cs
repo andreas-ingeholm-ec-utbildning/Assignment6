@@ -10,6 +10,7 @@ public class ProductEntity
     public Guid ID { get; set; } = Guid.NewGuid();
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
+    public string? ImageUrl { get; set; }
 
     [Column(TypeName = "money")]
     public decimal Price { get; set; }
@@ -27,6 +28,7 @@ public class ProductEntity
             Description = entity.Description,
             Price = entity.Price,
             Category = entity.Category,
+            ImageUrl = entity.ImageUrl,
         };
 
 }
