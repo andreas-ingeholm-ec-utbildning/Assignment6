@@ -2,6 +2,10 @@
 @inject CategoryService categoryService;
 @model ProductAddView;
 
+@{
+    var hasCategory = ((IEnumerable<ProductCategoryEntity>)ViewBag.Categories).Any(c => c.ID == Model?.Category);
+}
+
 <form enctype="multipart/form-data" method="post" novalidate>
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -39,10 +43,17 @@
         <label asp-for="Category" class="form-label"></label>
         <br/>
         <select asp-for="Category">
+
+            @if (!hasCategory)
+            {
+                <option>none</option>
+            }
+
             @foreach (ProductCategoryEntity category in ViewBag.Categories)
             {
                 <option value="@category.ID">@category.Name</option>
             }
+
         </select>
     </div>
 
