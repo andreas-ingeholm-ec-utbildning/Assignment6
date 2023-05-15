@@ -22,6 +22,9 @@ public class Repo<TEntity> where TEntity : class
     public async Task<IEnumerable<TEntity>> EnumerateAsync() =>
       await context.Set<TEntity>().ToArrayAsync();
 
+    public async Task<IEnumerable<TEntity>> EnumerateAsync<TProperty>(Expression<Func<TEntity, TProperty>> navigationPropertyPath) =>
+      await context.Set<TEntity>().Include(navigationPropertyPath).ToArrayAsync();
+
     public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate) =>
         await context.Set<TEntity>().FirstOrDefaultAsync(predicate);
 

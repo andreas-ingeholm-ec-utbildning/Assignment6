@@ -18,6 +18,8 @@ public class ProductEntity
     public Guid? CategoryID { get; set; }
     public ProductCategoryEntity? Category { get; set; }
 
+    public List<ProductTagEntity> Tags { get; set; } = new();
+
     public static implicit operator Product?(ProductEntity? entity) =>
         entity is null
         ? null
@@ -29,6 +31,7 @@ public class ProductEntity
             Price = entity.Price,
             Category = entity.Category,
             ImageUrl = entity.ImageUrl,
+            Tags = entity.Tags
         };
 
 }

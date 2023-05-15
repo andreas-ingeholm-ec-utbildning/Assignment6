@@ -8,4 +8,11 @@ public class ProductCategoryEntity
 
     public ICollection<ProductEntity> Products { get; set; } = new List<ProductEntity>();
 
+    public static implicit operator ProductCategory(ProductCategoryEntity entity) =>
+        new()
+        {
+            ID = entity.ID,
+            Name = entity.Name,
+        };
+
 }

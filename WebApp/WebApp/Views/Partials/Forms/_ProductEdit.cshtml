@@ -2,10 +2,6 @@
 @inject CategoryService categoryService;
 @model ProductAddView;
 
-@{
-    var hasCategory = ((IEnumerable<ProductCategoryEntity>)ViewBag.Categories).Any(c => c.ID == Model?.Category);
-}
-
 <form enctype="multipart/form-data" method="post" novalidate>
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -41,13 +37,10 @@
 
     <div class="mb-3">
         <label asp-for="Category" class="form-label"></label>
-        <br/>
+        <br />
         <select asp-for="Category">
 
-            @if (!hasCategory)
-            {
-                <option>none</option>
-            }
+            <option value="@null">none</option>
 
             @foreach (ProductCategoryEntity category in ViewBag.Categories)
             {
@@ -55,6 +48,20 @@
             }
 
         </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Tags</label>
+        <br />
+        <fieldset>
+
+            @foreach (SelectListItem tag in ViewBag.ProductTags)
+            {
+                <input type="checkbox" name="Tags" value="@tag.Value" checked="@tag.Selected" id="tag-@tag.Value" class="form-check"/>
+                <label for="tag-@tag.Value" class="small form-check-label">@tag.Text</label>
+            }
+
+        </fieldset>
     </div>
 
     <div class="d-grid mt-2">

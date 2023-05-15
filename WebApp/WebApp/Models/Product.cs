@@ -13,4 +13,6 @@ public class Product
 
     public ProductCategoryEntity? Category { get; set; }
 
+    public List<ProductTagEntity> Tags { get; set; } = new();
+
 }

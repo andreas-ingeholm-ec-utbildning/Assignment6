@@ -7,11 +7,11 @@ namespace WebApp.Controllers;
 public partial class AdminController
 {
 
-    [HttpGet("category/add")]
+    [HttpGet("admin/category/add")]
     public IActionResult AddCategory() =>
         View();
 
-    [HttpPost("category/add")]
+    [HttpPost("admin/category/add")]
     public async Task<IActionResult> AddCategory(CategoryAddView view)
     {
 
@@ -28,7 +28,7 @@ public partial class AdminController
 
     }
 
-    [HttpGet]
+    [HttpGet("admin/category")]
     public async Task<IActionResult> Category(Guid id)
     {
 
@@ -39,7 +39,7 @@ public partial class AdminController
 
     }
 
-    [HttpPost]
+    [HttpPost("admin/category")]
     public async Task<IActionResult> Category(CategoryEditView view)
     {
 
@@ -50,7 +50,7 @@ public partial class AdminController
 
     }
 
-    [HttpGet("category")]
+    [HttpGet("admin/category/delete")]
     public async Task<IActionResult> DeleteCategory(Guid id)
     {
 

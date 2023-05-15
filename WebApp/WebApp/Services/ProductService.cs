@@ -18,7 +18,7 @@ public class ProductService
     }
 
     public async Task<IEnumerable<ProductEntity>> EnumerateAsync() =>
-        await productRepo.EnumerateAsync();
+        await productRepo.EnumerateAsync(p => p.Tags);
 
     public async Task<Product?> FindProduct(Guid id) =>
         await productRepo.GetAsync(p => p.ID == id);

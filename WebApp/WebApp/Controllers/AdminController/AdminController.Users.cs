@@ -6,7 +6,7 @@ namespace WebApp.Controllers;
 public partial class AdminController
 {
 
-    [HttpGet]
+    [HttpGet("admin/user")]
     public new async Task<IActionResult> User(Guid id)
     {
 
@@ -24,7 +24,7 @@ public partial class AdminController
 
     }
 
-    [HttpPost]
+    [HttpPost("admin/user")]
     public new async Task<IActionResult> User(UserEditAdminView view)
     {
 
