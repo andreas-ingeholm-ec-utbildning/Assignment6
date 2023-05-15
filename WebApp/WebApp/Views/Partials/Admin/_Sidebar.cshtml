@@ -2,7 +2,21 @@
 
 <nav class="p-4">
 
-    <h5>Products:</h5>
+    <style type="text/css">
+
+        /* Adjust header for sidebar */
+        header {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+        }
+
+        header > .container > .toggle {
+            margin-left: 12px;
+        }
+
+    </style>
+
+    <h5 class="mt-3">Products:</h5>
     <ul class="p-0 me-4">
 
         @foreach (ProductEntity product in ViewBag.Products)
