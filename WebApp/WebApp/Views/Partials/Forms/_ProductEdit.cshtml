@@ -57,8 +57,10 @@
 
             @foreach (SelectListItem tag in ViewBag.ProductTags)
             {
-                <input type="checkbox" name="Tags" value="@tag.Value" checked="@tag.Selected" id="tag-@tag.Value" class="form-check"/>
-                <label for="tag-@tag.Value" class="small form-check-label">@tag.Text</label>
+                <div class="d-flex">
+                    <input type="checkbox" name="Tags" value="@tag.Value" checked="@tag.Selected" id="tag-@tag.Value" class="form-check me-2"/>
+                    <label for="tag-@tag.Value" class="small form-check-label">@tag.Text</label>
+                </div>
             }
 
         </fieldset>
