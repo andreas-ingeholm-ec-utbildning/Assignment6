@@ -3,6 +3,7 @@ using WebApp.Models.Entities;
 
 namespace WebApp.Contexts;
 
+/// <summary>Represents the product database.</summary>
 public class DataContext : DbContext
 {
 

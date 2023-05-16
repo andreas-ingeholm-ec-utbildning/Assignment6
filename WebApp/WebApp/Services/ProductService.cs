@@ -5,8 +5,11 @@ using WebApp.ViewModels;
 
 namespace WebApp.Services;
 
+/// <summary>Manages products.</summary>
 public class ProductService
 {
+
+    #region Injections
 
     readonly Repo<ProductEntity> productRepo;
     readonly IWebHostEnvironment webHostEnvironment;
@@ -17,12 +20,17 @@ public class ProductService
         this.webHostEnvironment = webHostEnvironment;
     }
 
+    #endregion
+
+    /// <summary>Enumerates all products.</summary>
     public async Task<IEnumerable<ProductEntity>> EnumerateAsync() =>
         await productRepo.EnumerateAsync(p => p.Tags);
 
+    /// <summary>Finds a product with the specified <paramref name="id"/>.</summary>
     public async Task<Product?> FindProduct(Guid id) =>
         await productRepo.GetAsync(p => p.ID == id);
 
+    /// <summary>Creates a product.</summary>
     public async Task<ProductEntity?> CreateAsync(ProductAddView view)
     {
 
@@ -46,6 +54,7 @@ public class ProductService
 
     }
 
+    /// <summary>Updates a product.</summary>
     public async Task<bool> UpdateAsync(ProductEditView view)
     {
 
@@ -71,7 +80,7 @@ public class ProductService
     }
 
     /// <summary>Saves an image to the server and sets <see cref="ProductEntity.ImageUrl"/>.</summary>
-    /// <remarks>Does not call <see cref="UpdateAsync(ProductEditView)"/>.</remarks>
+    /// <remarks><see cref="UpdateAsync(ProductEditView)"/> needs to be called afterwards to save <see cref="ProductEntity.ImageUrl"/>.</remarks>
     async Task<bool> UploadImage(ProductEntity product, IFormFile image)
     {
 
@@ -98,6 +107,7 @@ public class ProductService
 
     }
 
+    /// <summary>Deletes a product with the specified <paramref name="id"/>.</summary>
     public async Task<bool> DeleteAsync(Guid id)
     {
 

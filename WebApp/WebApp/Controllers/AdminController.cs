@@ -5,16 +5,14 @@ using WebApp.Services;
 
 namespace WebApp.Controllers;
 
+/// <summary>Represents admin console page. Functionality is divided into separate files.</summary>
 [Authorize(UserRole.Admin)]
 public partial class AdminController : Controller
 {
 
-    //TODO: Add tags
-    //TODO: Add documentation
-
     //TODO: Fix home page
     //TODO: Fix products page
-    //TODO: Fix product page
+    //TODO: Fix product page (also add search)
     //TODO: Fix contact form
     //TODO: Add shopping cart
 
@@ -40,7 +38,7 @@ public partial class AdminController : Controller
     public override void OnActionExecuting(ActionExecutingContext context)
     {
 
-        //All of these needs to be sent for sidebar
+        //Used to populate sidebar
         ViewBag.Products = productService.EnumerateAsync().Result;
         ViewBag.Users = userService.EnumerateAsync().Result;
         ViewBag.Categories = categoryService.EnumerateAsync().Result;

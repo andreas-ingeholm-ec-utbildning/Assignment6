@@ -8,6 +8,7 @@ using WebApp.ViewModels;
 
 namespace WebApp.Services;
 
+/// <summary>Manages authorization.</summary>
 public class AuthService
 {
 
@@ -15,23 +16,24 @@ public class AuthService
     readonly SignInManager<User> signInManager;
     readonly IdentityContext identityContext;
     readonly SeedService seedService;
-    readonly RoleManager<IdentityRole<Guid>> roleManager;
 
-    public AuthService(UserManager<User> userManager, IdentityContext identityContext, SignInManager<User> signInManager, SeedService seedService, RoleManager<IdentityRole<Guid>> roleManager)
+    public AuthService(UserManager<User> userManager, IdentityContext identityContext, SignInManager<User> signInManager, SeedService seedService)
     {
         this.userManager = userManager;
         this.identityContext = identityContext;
         this.signInManager = signInManager;
         this.seedService = seedService;
-        this.roleManager = roleManager;
     }
 
+    /// <summary>Gets if a user exist with the specified <paramref name="emailAddress"/>.</summary>
     public async Task<bool> ExistsAsync(string emailAddress) =>
         await userManager.FindByEmailAsync(emailAddress) is not null;
 
+    /// <summary>Gets the user with the specified <paramref name="emailAddress"/>, if one exists.</summary>
     public async Task<User?> FindByEmailAsync(string emailAddress) =>
         await userManager.FindByEmailAsync(emailAddress);
 
+    /// <summary>Registers a user.</summary>
     public async Task<bool> RegisterAsync(UserRegisterView view)
     {
 
@@ -67,9 +69,11 @@ public class AuthService
         }
     }
 
+    /// <summary>Gets the role of a user.</summary>
     public async Task<string> GetRoleAsync(User user) =>
         (await userManager.GetRolesAsync(user)).First();
 
+    /// <summary>Logs a user in.</summary>
     public async Task<bool> LoginAsync(UserLoginView view)
     {
 
@@ -85,9 +89,11 @@ public class AuthService
 
     }
 
+    /// <summary>Gets if we have a user signed-in.</summary>
     public bool IsSignedIn(ClaimsPrincipal user) =>
         signInManager.IsSignedIn(user);
 
+    /// <summary>Logs the current user out.</summary>
     public Task LogOutAsync() =>
         signInManager.SignOutAsync();
 

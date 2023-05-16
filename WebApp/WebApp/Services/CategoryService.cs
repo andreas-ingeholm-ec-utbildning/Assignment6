@@ -5,8 +5,11 @@ using WebApp.ViewModels;
 
 namespace WebApp.Services;
 
+/// <summary>Manages categories.</summary>
 public class CategoryService
 {
+
+    #region Injections
 
     readonly Repo<ProductCategoryEntity> categoryRepo;
     readonly DataContext context;
@@ -17,19 +20,26 @@ public class CategoryService
         this.context = context;
     }
 
+    #endregion
+
+    /// <summary>Gets or creates a category with the specified name.</summary>
     public async Task<ProductCategoryEntity> GetOrCreateAsync(string name) =>
         await categoryRepo.GetAsync(c => c.Name == name) ??
         await categoryRepo.AddAsync(new() { Name = name });
 
+    /// <summary>Enumerates all categories.</summary>
     public async Task<IEnumerable<ProductCategoryEntity>> EnumerateAsync() =>
         (await categoryRepo.EnumerateAsync()).Select(c => new ProductCategoryEntity() { Name = c.Name, ID = c.ID });
 
-    public async Task<ProductCategoryEntity?> GetAsync(Guid guid) =>
-        await categoryRepo.GetAsync(c => c.ID == guid);
+    /// <summary>Gets the category with the specified <paramref name="id"/>.</summary>
+    public async Task<ProductCategoryEntity?> GetAsync(Guid id) =>
+        await categoryRepo.GetAsync(c => c.ID == id);
 
+    /// <summary>Creates a category.</summary>
     public async Task<ProductCategoryEntity> CreateAsync(CategoryAddView view) =>
         await GetOrCreateAsync(view.Name);
 
+    /// <summary>Updates a category.</summary>
     public async Task<bool> Update(CategoryEditView view)
     {
 
@@ -45,6 +55,7 @@ public class CategoryService
 
     }
 
+    /// <summary>Deletes the category with the specified <paramref name="id"/>.</summary>
     public async Task<bool> Delete(Guid id)
     {
         if (await GetAsync(id) is ProductCategoryEntity category)

@@ -9,8 +9,11 @@ using WebApp.ViewModels;
 
 namespace WebApp.Services;
 
+/// <summary>Manages users.</summary>
 public class UserService
 {
+
+    #region Injections
 
     readonly IdentityContext identityContext;
     readonly UserManager<User> userManager;
@@ -25,25 +28,32 @@ public class UserService
         this.serviceProvider = serviceProvider;
     }
 
+    #endregion
+
+    /// <summary>Gets the user with the specified <paramref name="userID"/>, if one exists.</summary>
     public async Task<UserProfileEntity?> GetAsync(Guid userID) =>
         await identityContext.UserProfiles.Include(u => u.User).FirstOrDefaultAsync(u => u.UserID == userID);
 
+    /// <summary>Gets the user with the specified <paramref name="email"/>, if one exists.</summary>
     public async Task<UserProfileEntity?> GetAsync(string email) =>
         await identityContext.UserProfiles.Include(u => u.User).FirstOrDefaultAsync(u => u.User.Email == email);
 
+    /// <inheritdoc cref="GetAsync(string)"/>
     public UserProfileEntity? Get(string email) =>
         identityContext.UserProfiles.Include(u => u.User).FirstOrDefault(u => u.User.Email == email);
 
+    /// <summary>Enumerates all users.</summary>
     public async Task<IEnumerable<UserProfileEntity>> EnumerateAsync() =>
         await identityContext.UserProfiles.Include(u => u.User).ToArrayAsync();
 
+    /// <summary>Updates a user.</summary>
     public async Task<bool> UpdateAsync(UserEditView view)
     {
 
         if (GetLoggedInUser(out var userProfile))
         {
 
-            await UpdateUserProfileNoSave(userProfile, view);
+            await UpdateUserProfileInfo(userProfile, view);
             _ = await userManager.UpdateAsync(userProfile.User);
             _ = await identityContext.SaveChangesAsync();
             await RefreshClaims(userProfile.User);
@@ -56,30 +66,7 @@ public class UserService
 
     }
 
-    bool GetLoggedInEmail([NotNullWhen(true)] out string? email)
-    {
-
-        email = null;
-        var isAuthenticated = httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
-        if (!isAuthenticated)
-            return false;
-
-        email = httpContextAccessor.HttpContext?.User?.Identity?.Name;
-        return !string.IsNullOrEmpty(email);
-
-    }
-
-    bool GetLoggedInUser([NotNullWhen(true)] out UserProfileEntity? userProfile)
-    {
-
-        userProfile = null;
-        if (GetLoggedInEmail(out var email))
-            userProfile = Get(email);
-
-        return userProfile is not null;
-
-    }
-
+    /// <summary>Updates a user.</summary>
     public async Task<bool> UpdateAsync(UserEditAdminView view)
     {
 
@@ -87,7 +74,7 @@ public class UserService
         if (userProfile is null)
             return false;
 
-        await UpdateUserProfileNoSave(userProfile, view);
+        await UpdateUserProfileInfo(userProfile, view);
 
         if (view.Role is UserRole.User or UserRole.Admin)
             await SetRoleAsync(userProfile.User, view.Role);
@@ -101,7 +88,9 @@ public class UserService
 
     }
 
-    async Task UpdateUserProfileNoSave(UserProfileEntity userProfile, UserEditView view)
+    /// <summary>Updates user profile info, and DisplayName claim.</summary>
+    /// <remarks>Does not save to db.</remarks>
+    async Task UpdateUserProfileInfo(UserProfileEntity userProfile, UserEditView view)
     {
 
         //Update info
@@ -117,9 +106,11 @@ public class UserService
 
     }
 
+    /// <summary>Gets the claims of a user.</summary>
     async Task<IEnumerable<Claim>> GetClaimsAsync(User user, string claimType) =>
        (await userManager.GetClaimsAsync(user)).Where(c => c.Type == claimType);
 
+    /// <summary>Sets the role of a user.</summary>
     async Task SetRoleAsync(User user, string role)
     {
 
@@ -134,10 +125,37 @@ public class UserService
 
     }
 
+    /// <summary>Refreshes claims for the specified <paramref name="user"/>.</summary>
     async Task RefreshClaims(User user)
     {
         var signInManager = serviceProvider.GetRequiredService<SignInManager<User>>();
         await signInManager.RefreshSignInAsync(user);
+    }
+
+    /// <summary>Gets the email of the logged in user.</summary>
+    bool GetLoggedInEmail([NotNullWhen(true)] out string? email)
+    {
+
+        email = null;
+        var isAuthenticated = httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
+        if (!isAuthenticated)
+            return false;
+
+        email = httpContextAccessor.HttpContext?.User?.Identity?.Name;
+        return !string.IsNullOrEmpty(email);
+
+    }
+
+    /// <summary>Gets the profile of the logged in user.</summary>
+    bool GetLoggedInUser([NotNullWhen(true)] out UserProfileEntity? userProfile)
+    {
+
+        userProfile = null;
+        if (GetLoggedInEmail(out var email))
+            userProfile = Get(email);
+
+        return userProfile is not null;
+
     }
 
 }

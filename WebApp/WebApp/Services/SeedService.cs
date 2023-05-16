@@ -2,6 +2,7 @@
 
 namespace WebApp.Services;
 
+/// <summary>Sets up roles.</summary>
 public class SeedService
 {
 

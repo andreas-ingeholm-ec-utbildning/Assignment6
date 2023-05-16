@@ -4,6 +4,7 @@ using WebApp.Contexts;
 
 namespace WebApp.Repositories;
 
+/// <summary>Provides database functionality for <typeparamref name="TEntity"/>.</summary>
 public class Repo<TEntity> where TEntity : class
 {
 
@@ -12,6 +13,7 @@ public class Repo<TEntity> where TEntity : class
     public Repo(DataContext context) =>
         this.context = context;
 
+    /// <summary>Adds a <typeparamref name="TEntity"/> to the db.</summary>
     public async Task<TEntity> AddAsync(TEntity entity)
     {
         _ = await context.Set<TEntity>().AddAsync(entity);
@@ -19,21 +21,28 @@ public class Repo<TEntity> where TEntity : class
         return entity;
     }
 
+    /// <inheritdoc cref="EnumerateAsync{TProperty}(Expression{Func{TEntity, TProperty}})"/>
     public async Task<IEnumerable<TEntity>> EnumerateAsync() =>
       await context.Set<TEntity>().ToArrayAsync();
 
+    /// <summary>Enumerates all <typeparamref name="TEntity"/> from the db.</summary>
+    /// <param name="navigationPropertyPath">Include foreign table.</param>
     public async Task<IEnumerable<TEntity>> EnumerateAsync<TProperty>(Expression<Func<TEntity, TProperty>> navigationPropertyPath) =>
       await context.Set<TEntity>().Include(navigationPropertyPath).ToArrayAsync();
 
+    /// <summary>Gets a <typeparamref name="TEntity"/> from the db.</summary>
+    /// <param name="navigationPropertyPath">Include foreign table.</param>
     public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate) =>
         await context.Set<TEntity>().FirstOrDefaultAsync(predicate);
 
+    /// <summary>Deletes a <typeparamref name="TEntity"/> from the db.</summary>
     public async Task DeleteAsync(TEntity entity)
     {
         _ = context.Set<TEntity>().Remove(entity);
         _ = await context.SaveChangesAsync();
     }
 
+    /// <summary>Updates a <typeparamref name="TEntity"/> from the db.</summary>
     public async Task UpdateAsync(TEntity entity)
     {
         _ = context.Set<TEntity>().Update(entity);

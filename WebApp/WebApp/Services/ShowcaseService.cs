@@ -2,6 +2,7 @@
 
 namespace WebApp.Services;
 
+/// <summary>Manages showcases.</summary>
 public class ShowcaseService
 {
 
@@ -20,11 +21,11 @@ public class ShowcaseService
         },
     };
 
-    public bool ShowLatest { get; set; }
-
+    /// <summary>Gets all showcases.</summary>
     public Showcase[] GetShowcases() =>
         showcases;
 
+    /// <summary>Get latest.</summary>
     public Showcase? GetLatest() =>
         showcases.LastOrDefault();
 

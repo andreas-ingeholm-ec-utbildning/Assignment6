@@ -7,6 +7,8 @@ namespace WebApp.Controllers;
 public partial class AdminController
 {
 
+    #region Add
+
     [HttpGet("admin/category/add")]
     public IActionResult AddCategory() =>
         View();
@@ -27,6 +29,9 @@ public partial class AdminController
         return View();
 
     }
+
+    #endregion
+    #region Edit
 
     [HttpGet("admin/category")]
     public async Task<IActionResult> Category(Guid id)
@@ -50,6 +55,9 @@ public partial class AdminController
 
     }
 
+    #endregion
+    #region Delete
+
     [HttpGet("admin/category/delete")]
     public async Task<IActionResult> DeleteCategory(Guid id)
     {
@@ -63,5 +71,7 @@ public partial class AdminController
         }
 
     }
+
+    #endregion
 
 }

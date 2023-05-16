@@ -37,7 +37,7 @@ public class UserController : Controller
         if (!ModelState.IsValid || !await userService.UpdateAsync(view))
             ModelState.AddModelError("", "Something went wrong when updating user.");
 
-        //Make sure page reloads for user, otherwise claims won't be refreshed
+        //Make sure page is reloaded for user, otherwise claims won't be refreshed
         return Redirect("/user");
 
     }

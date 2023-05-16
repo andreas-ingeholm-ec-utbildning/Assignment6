@@ -6,6 +6,7 @@ using WebApp.Models.Identity;
 
 namespace WebApp.Contexts;
 
+/// <summary>Represents identity database.</summary>
 public class IdentityContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
 {
 
