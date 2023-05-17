@@ -1,0 +1,8 @@
+﻿@model ShowcaseFormView;
+
+<div class="col-6">
+    <h4 class="my-4">Edit showcase:</h4>
+    <div class="text-info my-2">ID: @Model.ID</div>
+    <partial name="/Views/Partials/Forms/_Showcase.cshtml" model="@Model" />
+    <a asp-controller="admin" asp-action="deleteshowcase" asp-route-id="@Model.ID">Delete showcase...</a>
+</div>

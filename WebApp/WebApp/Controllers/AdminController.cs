@@ -10,23 +10,26 @@ namespace WebApp.Controllers;
 public partial class AdminController : Controller
 {
 
-    //TODO: Fix home page
     //TODO: Fix contact form
     //TODO: Add shopping cart
+    //TODO: Fix carosouel for showcases
+    //TODO: Double check against design template
 
     readonly AuthService authService;
     readonly UserService userService;
     readonly ProductService productService;
     readonly CategoryService categoryService;
     readonly TagService tagService;
+    readonly ShowcaseService showcaseService;
 
-    public AdminController(ProductService productService, CategoryService categoryService, UserService userService, AuthService authService, TagService tagService)
+    public AdminController(ProductService productService, CategoryService categoryService, UserService userService, AuthService authService, TagService tagService, ShowcaseService showcaseService)
     {
         this.productService = productService;
         this.categoryService = categoryService;
         this.userService = userService;
         this.authService = authService;
         this.tagService = tagService;
+        this.showcaseService = showcaseService;
     }
 
     [Route("admin/{*url}", Order = 999)]
@@ -41,6 +44,7 @@ public partial class AdminController : Controller
         ViewBag.Users = userService.EnumerateAsync().Result;
         ViewBag.Categories = categoryService.EnumerateAsync().Result;
         ViewBag.Tags = tagService.EnumerateAsync().Result;
+        ViewBag.Showcases = showcaseService.EnumerateAsync().Result;
 
         base.OnActionExecuting(context);
 

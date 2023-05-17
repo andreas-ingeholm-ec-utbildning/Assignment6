@@ -16,7 +16,7 @@ public partial class AdminController
     }
 
     [HttpPost("admin/product/add")]
-    public async Task<IActionResult> AddProduct(ProductAddView view, string[] tags)
+    public async Task<IActionResult> AddProduct(ProductFormView view, string[] tags)
     {
 
         if (ModelState.IsValid)
@@ -51,12 +51,12 @@ public partial class AdminController
             return NotFound();
 
         ViewBag.ProductTags = tagService.EnumerateFromAsync(product).Result;
-        return View((ProductEditView)product);
+        return View((ProductFormView)product);
 
     }
 
     [HttpPost("admin/product")]
-    public async Task<IActionResult> Product(ProductEditView view, string[] tags)
+    public async Task<IActionResult> Product(ProductFormView view, string[] tags)
     {
 
         if (!ModelState.IsValid || !await productService.UpdateAsync(view))

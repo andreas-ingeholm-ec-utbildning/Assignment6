@@ -1,20 +1,18 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using WebApp.Models;
 using WebApp.Models.Entities;
 
 namespace WebApp.ViewModels;
 
-public class ProductAddView
+public class ProductFormView
 {
+
+    public Guid ID { get; set; }
 
     [Required(ErrorMessage = "You must assign a name to the product.")]
     [DisplayName("Product name *")]
     public string Name { get; set; } = null!;
-
-    [DataType(DataType.Upload)]
-    public IFormFile? Image { get; set; }
-
-    public string? ExistingImageUrl { get; set; }
 
     public string? Description { get; set; }
 
@@ -23,15 +21,33 @@ public class ProductAddView
     [DataType(DataType.Currency)]
     public decimal Price { get; set; }
 
+    [DataType(DataType.Upload)]
+    [DisplayName("Image *")]
+    public virtual IFormFile? Image { get; set; }
+
+    public string? CurrentImageUrl { get; set; }
+
     public Guid? Category { get; set; }
 
-    public static implicit operator ProductEntity(ProductAddView view) =>
+    public static implicit operator ProductEntity(ProductFormView view) =>
         new()
         {
+            ID = view.ID,
             Name = view.Name,
             Description = view.Description,
             Price = view.Price,
             CategoryID = view.Category,
+        };
+
+    public static implicit operator ProductFormView(Product product) =>
+        new()
+        {
+            ID = product.ID,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+            Category = product.Category?.ID,
+            CurrentImageUrl = product.ImageUrl,
         };
 
 }

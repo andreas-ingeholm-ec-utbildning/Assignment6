@@ -14,7 +14,7 @@ public partial class AdminController
         View();
 
     [HttpPost("admin/tag/add")]
-    public async Task<IActionResult> AddTag(TagAddView view)
+    public async Task<IActionResult> AddTag(TagFormView view)
     {
 
         if (ModelState.IsValid)
@@ -36,15 +36,14 @@ public partial class AdminController
     [HttpGet("admin/tag")]
     public async Task<IActionResult> Tag(Guid id)
     {
-
         if (await tagService.GetAsync(id) is TagEntity tag)
-            return View((TagEditView)tag);
+            return View((TagFormView)tag);
         else
             return NotFound();
     }
 
     [HttpPost("admin/tag")]
-    public async Task<IActionResult> Tag(TagEditView view)
+    public async Task<IActionResult> Tag(TagFormView view)
     {
 
         if (!ModelState.IsValid || !await tagService.Update(view))

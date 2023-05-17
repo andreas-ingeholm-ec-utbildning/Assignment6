@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using WebApp.Contexts;
 using WebApp.Models;
 using WebApp.Models.Entities;
@@ -54,11 +55,11 @@ public class TagService
         await tagRepo.GetAsync(c => c.ID == guid);
 
     /// <summary>Creates a tag.</summary>
-    public async Task<TagEntity> CreateAsync(TagAddView view) =>
+    public async Task<TagEntity> CreateAsync(TagFormView view) =>
         await tagRepo.AddAsync(new() { Name = view.Name });
 
     /// <summary>Updates a tag.</summary>
-    public async Task<bool> Update(TagEditView view)
+    public async Task<bool> Update(TagFormView view)
     {
 
         var tag = await GetAsync(view.ID);
@@ -112,13 +113,38 @@ public class TagService
 
     }
 
+    public async Task<IEnumerable<ProductCollection>> EnumerateProductTagsAndProducts()
+    {
+
+        var tags = await context.ProductTags.Include(t => t.Tag).Include(t => t.Product).ThenInclude(p => p.Category).ToArrayAsync();
+
+        var d = new Dictionary<TagEntity, List<Product>>();
+
+        foreach (var productTag in tags)
+        {
+
+            var tag = productTag.Tag;
+            var product = (Product)productTag.Product;
+
+            if (d.ContainsKey(tag))
+                d[tag].Add(product);
+            else
+                d.Add(tag, new List<Product>() { product });
+
+        }
+
+        var collections = d.ToDictionary(kvp => (Tag)kvp.Key, kvp => kvp.Value).Select(kvp => (ProductCollection)kvp);
+        return collections;
+
+    }
+
     public Task<IEnumerable<Product>> EnumerateProductsAsync(TagEntity tag) =>
         EnumerateProductsAsync((Tag)tag);
 
     public async Task<IEnumerable<Product>> EnumerateProductsAsync(Tag tag)
     {
 
-        var productTags = (await productTagRepo.EnumerateAsync()).Where(t => t.TagID == tag.ID);
+        var productTags = (await context.ProductTags.Include(t => t.Tag).Include(t => t.Product).ThenInclude(p => p.Category).ToArrayAsync()).Where(t => t.TagID == tag.ID);
         var products = productTags.Select(async t => await productRepo.GetAsync(p => p.ID == t.ProductID)).OfType<ProductEntity>().Select(p => (Product)p!);
         return products;
 

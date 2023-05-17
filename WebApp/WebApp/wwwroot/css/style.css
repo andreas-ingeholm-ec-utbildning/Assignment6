@@ -593,12 +593,14 @@ footer .container {
   font-size: 18px;
   font-weight: 400;
   margin-bottom: 20px;
+  overflow-wrap: anywhere;
 }
 .showcase .content .title {
   font-size: 50px;
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 40px;
+  overflow-wrap: anywhere;
 }
 @media (min-width: 992px) {
   .showcase .content .title {

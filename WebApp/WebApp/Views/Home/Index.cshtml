@@ -1,11 +1,13 @@
-﻿@inject ShowcaseService showcaseService;
-@inject CollectionService collectionService;
+﻿@inject CollectionService collectionService;
 
-<partial name="/Views/Partials/_Showcase.cshtml" model="showcaseService.GetLatest()"/>
-
-@foreach (var collection in collectionService.GetCollections())
+@foreach (Showcase showcase in ViewBag.Showcases)
 {
-    <partial name="/Views/Partials/_GridCollection.cshtml" model="collection"/>
+    <partial name="/Views/Partials/_Showcase.cshtml" model="showcase"/>
+}
+
+@foreach (ProductCollection collection in ViewBag.Products)
+{
+    <partial name="/Views/Partials/_ProductCollection.cshtml" model="collection" />
 }
 
 <partial name="/Views/Partials/Forms/_Newsletter.cshtml" />

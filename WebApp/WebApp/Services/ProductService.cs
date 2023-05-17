@@ -15,15 +15,15 @@ public class ProductService
 
     readonly Repo<ProductEntity> productRepo;
     readonly DataContext context;
-    readonly TagService tagService;
     readonly IWebHostEnvironment webHostEnvironment;
+    readonly ImageService imageService;
 
-    public ProductService(Repo<ProductEntity> productRepo, IWebHostEnvironment webHostEnvironment, TagService tagService, DataContext context)
+    public ProductService(Repo<ProductEntity> productRepo, IWebHostEnvironment webHostEnvironment, DataContext context, ImageService imageService)
     {
         this.productRepo = productRepo;
         this.webHostEnvironment = webHostEnvironment;
-        this.tagService = tagService;
         this.context = context;
+        this.imageService = imageService;
     }
 
     #endregion
@@ -43,18 +43,16 @@ public class ProductService
     }
 
     /// <summary>Creates a product.</summary>
-    public async Task<ProductEntity?> CreateAsync(ProductAddView view)
+    public async Task<ProductEntity?> CreateAsync(ProductFormView view)
     {
 
         try
         {
 
-            var entity = (ProductEntity)view;
+            var product = await productRepo.AddAsync((ProductEntity)view);
 
-            var product = await productRepo.AddAsync(entity);
-
-            if (view.Image is not null && await UploadImage(product, view.Image))
-                await productRepo.UpdateAsync(product);
+            product.ImageUrl = await imageService.UploadImage<Product>(view.Image, product.ID);
+            await productRepo.UpdateAsync(product);
 
             return product;
 
@@ -67,7 +65,7 @@ public class ProductService
     }
 
     /// <summary>Updates a product.</summary>
-    public async Task<bool> UpdateAsync(ProductEditView view)
+    public async Task<bool> UpdateAsync(ProductFormView view)
     {
 
         var product = await productRepo.GetAsync(p => p.ID == view.ID);
@@ -78,44 +76,12 @@ public class ProductService
         product.Description = view.Description;
         product.Price = view.Price;
         product.CategoryID = view.Category;
-
-        if (view.Image is not null)
-            if (await UploadImage(product, view.Image))
-                view.ExistingImageUrl = product.ImageUrl;
-            else
-                return false;
+        product.ImageUrl = await imageService.UploadImage<Product>(view.Image, product.ID);
 
         await productRepo.UpdateAsync(product);
+        view.CurrentImageUrl = product.ImageUrl;
 
         return true;
-
-    }
-
-    /// <summary>Saves an image to the server and sets <see cref="ProductEntity.ImageUrl"/>.</summary>
-    /// <remarks><see cref="UpdateAsync(ProductEditView)"/> needs to be called afterwards to save <see cref="ProductEntity.ImageUrl"/>.</remarks>
-    async Task<bool> UploadImage(ProductEntity product, IFormFile image)
-    {
-
-        if (image is null)
-            return false;
-
-        try
-        {
-
-            var imageUrl = $"/images/products/{product.ID}_{image.FileName}";
-            product.ImageUrl = imageUrl;
-
-            var imagePath = $"{webHostEnvironment.WebRootPath}{product.ImageUrl}";
-            using var fs = new FileStream(imagePath, FileMode.Create, FileAccess.Write);
-
-            await image.CopyToAsync(fs);
-            return true;
-
-        }
-        catch (Exception)
-        {
-            return false;
-        }
 
     }
 

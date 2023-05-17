@@ -14,7 +14,7 @@ public partial class AdminController
         View();
 
     [HttpPost("admin/category/add")]
-    public async Task<IActionResult> AddCategory(CategoryAddView view)
+    public async Task<IActionResult> AddCategory(CategoryFormView view)
     {
 
         if (ModelState.IsValid)
@@ -38,14 +38,14 @@ public partial class AdminController
     {
 
         if (await categoryService.GetAsync(id) is ProductCategoryEntity category)
-            return View((CategoryEditView)category);
+            return View((CategoryFormView)category);
         else
             return NotFound();
 
     }
 
     [HttpPost("admin/category")]
-    public async Task<IActionResult> Category(CategoryEditView view)
+    public async Task<IActionResult> Category(CategoryFormView view)
     {
 
         if (!ModelState.IsValid || !await categoryService.Update(view))

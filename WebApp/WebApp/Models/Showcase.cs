@@ -2,8 +2,12 @@
 
 public class Showcase
 {
-    public string? Ingress { get; set; }
-    public string? Title { get; set; }
-    public string? ImageUrl { get; set; }
-    public LinkButton? LinkButton { get; set; }
+
+    public Guid ID { get; set; }
+    public string Ingress { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public string? ImageUrl { get; set; } = null!;
+    public string LinkText { get; set; } = null!;
+    public string LinkUrl { get; set; } = null!;
+
 }

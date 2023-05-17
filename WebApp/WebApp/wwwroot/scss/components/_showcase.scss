@@ -42,12 +42,15 @@
             font-size: 18px;
             font-weight: $font-weight-regular;
             margin-bottom: 20px;
+            overflow-wrap: anywhere;
         }
+
         .title {
             font-size: 50px;
             font-weight: $font-weight-bold;
             line-height: 1.2;
             margin-bottom: 40px;
+            overflow-wrap: anywhere;
 
             @include lg {
                 margin-bottom: 30px;

@@ -5,10 +5,9 @@
 
         <img src="@Model.ImageUrl" width="64" height="64" class="rounded-start"/>
 
-        <div class="my-auto mx-2 w-100 fw-bold align-self-center">
-            <h6>@Model.Name</h6>
-            <h6>@Model.Price</h6>
-            <h6>@Model.Description</h6>
+        <div class="my-auto mx-2 w-100 align-self-center">
+            <h6 class="fw-bold">@Model.Name</h6>
+            <h6 class="fw-bold">@Model.Price.ToMoneyString()</h6>
         </div>
 
         <div class="w-100 text-end align-self-center me-3 text-muted">

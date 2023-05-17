@@ -1,4 +1,5 @@
 ﻿using WebApp.Contexts;
+using WebApp.Models;
 using WebApp.Models.Entities;
 using WebApp.Repositories;
 using WebApp.ViewModels;
@@ -28,19 +29,19 @@ public class CategoryService
         await categoryRepo.AddAsync(new() { Name = name });
 
     /// <summary>Enumerates all categories.</summary>
-    public async Task<IEnumerable<ProductCategoryEntity>> EnumerateAsync() =>
-        (await categoryRepo.EnumerateAsync()).Select(c => new ProductCategoryEntity() { Name = c.Name, ID = c.ID });
+    public async Task<IEnumerable<ProductCategory>> EnumerateAsync() =>
+        (await categoryRepo.EnumerateAsync()).Select(c => (ProductCategory)c);
 
     /// <summary>Gets the category with the specified <paramref name="id"/>.</summary>
     public async Task<ProductCategoryEntity?> GetAsync(Guid id) =>
         await categoryRepo.GetAsync(c => c.ID == id);
 
     /// <summary>Creates a category.</summary>
-    public async Task<ProductCategoryEntity> CreateAsync(CategoryAddView view) =>
+    public async Task<ProductCategoryEntity> CreateAsync(CategoryFormView view) =>
         await GetOrCreateAsync(view.Name);
 
     /// <summary>Updates a category.</summary>
-    public async Task<bool> Update(CategoryEditView view)
+    public async Task<bool> Update(CategoryFormView view)
     {
 
         var category = await GetAsync(view.ID);

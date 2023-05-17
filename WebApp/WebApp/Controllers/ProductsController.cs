@@ -25,6 +25,13 @@ public class ProductsController : Controller
         return View(view);
     }
 
+    public async Task<IActionResult> Search(string q)
+    {
+        var view = new SearchView() { Query = q };
+        await productService.Search(view);
+        return View(view);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Search(SearchView view)
     {
@@ -32,7 +39,13 @@ public class ProductsController : Controller
         return View(view);
     }
 
-    public IActionResult Product() =>
-        View();
+    public async Task<IActionResult> Product(Guid id)
+    {
+        var product = await productService.FindProduct(id);
+        return
+            product is not null
+            ? View(product)
+            : NotFound();
+    }
 
 }

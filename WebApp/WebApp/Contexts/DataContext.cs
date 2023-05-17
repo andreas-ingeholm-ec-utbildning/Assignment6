@@ -14,5 +14,6 @@ public class DataContext : DbContext
     public DbSet<ProductCategoryEntity> Categories { get; set; }
     public DbSet<ProductTagEntity> ProductTags { get; set; }
     public DbSet<TagEntity> Tags { get; set; }
+    public DbSet<ShowcaseEntity> Showcases { get; set; }
 
 }

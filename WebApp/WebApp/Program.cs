@@ -19,6 +19,7 @@ builder.Services.AddScoped<Repo<ProductEntity>>();
 builder.Services.AddScoped<Repo<ProductCategoryEntity>>();
 builder.Services.AddScoped<Repo<TagEntity>>();
 builder.Services.AddScoped<Repo<ProductTagEntity>>();
+builder.Services.AddScoped<Repo<ShowcaseEntity>>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<SeedService>();
 builder.Services.AddScoped<ProductService>();
@@ -27,6 +28,8 @@ builder.Services.AddScoped<ShowcaseService>();
 builder.Services.AddScoped<CollectionService>();
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<TagService>();
+builder.Services.AddScoped<ShowcaseService>();
+builder.Services.AddScoped<ImageService>();
 
 builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
 {

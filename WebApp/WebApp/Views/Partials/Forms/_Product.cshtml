@@ -1,6 +1,4 @@
-﻿@using WebApp.Models.Entities;
-@inject CategoryService categoryService;
-@model ProductAddView;
+﻿@model ProductFormView;
 
 <form enctype="multipart/form-data" method="post" novalidate>
 
@@ -18,21 +16,21 @@
         <small><span asp-validation-for="Image" class="text-danger"></span></small>
     </div>
 
-    @if(Model?.ExistingImageUrl is not null)
+    @if(Model?.CurrentImageUrl is not null)
     {
-        <img class="product-image-preview" src="@Model.ExistingImageUrl" alt="@Model.ExistingImageUrl" />
+        <img class="product-image-preview" src="@Model.CurrentImageUrl" alt="@Model.CurrentImageUrl" />
     }
-
-    <div>
-        <label asp-for="Description" class="form-label"></label>
-        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
-        <small><span asp-validation-for="Description" class="text-danger"></span></small>
-    </div>
 
     <div class="mb-3">
         <label asp-for="Price" class="form-label"></label>
         <input asp-for="Price" class="form-control" />
         <small><span asp-validation-for="Price" class="text-danger"></span></small>
+    </div>
+
+    <div>
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        <small><span asp-validation-for="Description" class="text-danger"></span></small>
     </div>
 
     <div class="mb-3">
@@ -42,7 +40,7 @@
 
             <option value="@null">none</option>
 
-            @foreach (ProductCategoryEntity category in ViewBag.Categories)
+            @foreach (ProductCategory category in ViewBag.Categories)
             {
                 <option value="@category.ID">@category.Name</option>
             }
