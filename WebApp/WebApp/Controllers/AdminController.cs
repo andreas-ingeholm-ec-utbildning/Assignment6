@@ -11,8 +11,6 @@ public partial class AdminController : Controller
 {
 
     //TODO: Fix home page
-    //TODO: Fix products page
-    //TODO: Fix product page (also add search)
     //TODO: Fix contact form
     //TODO: Add shopping cart
 

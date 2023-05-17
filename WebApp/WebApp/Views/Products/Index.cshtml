@@ -1,23 +1,35 @@
 ﻿@inject ProductService productService;
 @{
-
     ViewData["Title"] = "Products";
+}
 
-    var products = await productService.EnumerateAsync();
+@{
+
+    var products =
+        ((IEnumerable<Product>)ViewBag.Products).
+        GroupBy(p => p.Category);
 
 }
 
-<div class="mb-3">
-    <a asp-controller="products" asp-action="manage" class="my-2">Manage products...</a>
-</div>
+<div class="align-self-center mx-auto col-8 col-lg-4">
 
-@if (products is not null)
-    foreach (var product in products)
+    @foreach (IGrouping<ProductCategory?, Product?> group in products)
     {
-        <div class="mb-3">
-            <div>@product.ID</div>
-            <div>@product.Name</div>
-            <div>@product.Price</div>
-            <div>@product.Description</div>
-        </div>
+
+        @if(group.Key is not null)
+        {
+            <h4>@group.Key.Name:</h4>
+        }
+
+        @foreach (var product in group)
+        {
+
+            <a asp-action="product" asp-route-id="@product!.ID">
+                <partial name="/Views/Partials/_ProductListItem.cshtml" model="@product"></partial>
+            </a>
+
+        }
+
     }
+
+</div>

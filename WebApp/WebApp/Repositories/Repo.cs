@@ -21,14 +21,9 @@ public class Repo<TEntity> where TEntity : class
         return entity;
     }
 
-    /// <inheritdoc cref="EnumerateAsync{TProperty}(Expression{Func{TEntity, TProperty}})"/>
-    public async Task<IEnumerable<TEntity>> EnumerateAsync() =>
-      await context.Set<TEntity>().ToArrayAsync();
-
     /// <summary>Enumerates all <typeparamref name="TEntity"/> from the db.</summary>
-    /// <param name="navigationPropertyPath">Include foreign table.</param>
-    public async Task<IEnumerable<TEntity>> EnumerateAsync<TProperty>(Expression<Func<TEntity, TProperty>> navigationPropertyPath) =>
-      await context.Set<TEntity>().Include(navigationPropertyPath).ToArrayAsync();
+    public async Task<IEnumerable<TEntity>> EnumerateAsync() =>
+        await context.Set<TEntity>().ToArrayAsync();
 
     /// <summary>Gets a <typeparamref name="TEntity"/> from the db.</summary>
     /// <param name="navigationPropertyPath">Include foreign table.</param>

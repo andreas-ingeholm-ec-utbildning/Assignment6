@@ -1,6 +1,4 @@
-﻿using WebApp.Models.Entities;
-
-namespace WebApp.Models;
+﻿namespace WebApp.Models;
 
 public class Product
 {
@@ -11,8 +9,7 @@ public class Product
     public decimal Price { get; set; }
     public string? ImageUrl { get; set; }
 
-    public ProductCategoryEntity? Category { get; set; }
-
-    public List<ProductTagEntity> Tags { get; set; } = new();
+    public ProductCategory? Category { get; set; }
+    public List<Tag> Tags { get; set; } = new();
 
 }

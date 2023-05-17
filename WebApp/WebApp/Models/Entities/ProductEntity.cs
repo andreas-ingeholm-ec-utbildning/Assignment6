@@ -20,18 +20,16 @@ public class ProductEntity
 
     public List<ProductTagEntity> Tags { get; set; } = new();
 
-    public static implicit operator Product?(ProductEntity? entity) =>
-        entity is null
-        ? null
-        : new()
+    public static implicit operator Product(ProductEntity entity) =>
+        new()
         {
             ID = entity.ID,
             Name = entity.Name,
             Description = entity.Description,
             Price = entity.Price,
-            Category = entity.Category,
+            Category = (ProductCategory?)entity.Category!,
             ImageUrl = entity.ImageUrl,
-            Tags = entity.Tags
+            Tags = entity.Tags.Select(t => (Tag)t).ToList()
         };
 
 }

@@ -9,10 +9,12 @@ public class ProductCategoryEntity
     public ICollection<ProductEntity> Products { get; set; } = new List<ProductEntity>();
 
     public static implicit operator ProductCategory(ProductCategoryEntity entity) =>
-        new()
+        entity is not null
+        ? new()
         {
             ID = entity.ID,
             Name = entity.Name,
-        };
+        }
+        : null!;
 
 }

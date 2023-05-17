@@ -15,13 +15,15 @@ public class TagService
 
     readonly Repo<TagEntity> tagRepo;
     readonly Repo<ProductTagEntity> productTagRepo;
+    readonly Repo<ProductEntity> productRepo;
     readonly DataContext context;
 
-    public TagService(Repo<TagEntity> tagRepo, DataContext context, Repo<ProductTagEntity> productTagRepo)
+    public TagService(Repo<TagEntity> tagRepo, DataContext context, Repo<ProductTagEntity> productTagRepo, Repo<ProductEntity> productRepo)
     {
         this.tagRepo = tagRepo;
         this.context = context;
         this.productTagRepo = productTagRepo;
+        this.productRepo = productRepo;
     }
 
     #endregion
@@ -35,7 +37,7 @@ public class TagService
 
     /// <summary>Enumerates all tags as <see cref="SelectListItem"/>, with <see cref="SelectListItem.Selected"/> set to <see langword="true"/> if <paramref name="product"/> has tag.</summary>
     public async Task<IEnumerable<SelectListItem>> EnumerateFromAsync(Product? product = null) =>
-        (await tagRepo.EnumerateAsync()).Select(tag => new SelectListItem() { Text = tag.Name, Value = tag.ID.ToString(), Selected = product?.Tags?.Any(t => t.TagID == tag.ID) ?? false });
+        (await tagRepo.EnumerateAsync()).Select(tag => new SelectListItem() { Text = tag.Name, Value = tag.ID.ToString(), Selected = product?.Tags?.Any(t => t.ID == tag.ID) ?? false });
 
     /// <inheritdoc cref="EnumerateFromAsync(Guid[])"/>
     public async Task<IEnumerable<SelectListItem>> EnumerateFromAsync(string[] tagIDs) =>
@@ -107,6 +109,18 @@ public class TagService
                 ProductID = productID,
                 TagID = tag
             });
+
+    }
+
+    public Task<IEnumerable<Product>> EnumerateProductsAsync(TagEntity tag) =>
+        EnumerateProductsAsync((Tag)tag);
+
+    public async Task<IEnumerable<Product>> EnumerateProductsAsync(Tag tag)
+    {
+
+        var productTags = (await productTagRepo.EnumerateAsync()).Where(t => t.TagID == tag.ID);
+        var products = productTags.Select(async t => await productRepo.GetAsync(p => p.ID == t.ProductID)).OfType<ProductEntity>().Select(p => (Product)p!);
+        return products;
 
     }
 

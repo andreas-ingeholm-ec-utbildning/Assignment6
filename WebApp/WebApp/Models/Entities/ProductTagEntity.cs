@@ -12,4 +12,11 @@ public class ProductTagEntity
     public Guid TagID { get; set; }
     public TagEntity Tag { get; set; } = null!;
 
+    public static implicit operator Tag(ProductTagEntity entity) =>
+        new()
+        {
+            ID = entity.TagID,
+            Name = entity.Tag.Name
+        };
+
 }

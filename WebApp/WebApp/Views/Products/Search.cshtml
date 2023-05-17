@@ -1,1 +1,23 @@
-﻿
+﻿@model SearchView
+@using System.Web;
+@{ ViewData["Title"] = "Search..."; }
+
+<div class="align-self-center mx-auto col-8 col-lg-4">
+
+    <form method="post">
+        <div class="my-4 d-flex">
+            <input type="text" value="@Model.Query" placeholder="Search..." asp-for="Query" class="p-2 h-100 form-text rounded"/>
+            <button type="submit" class="btn btn-light h-100 align-self-center">🔎</button>
+        </div>
+    </form>
+
+    <div class="m-3">
+
+        @foreach (var product in Model.Products)
+        {
+            <partial name="/Views/Partials/_ProductListItem.cshtml" model="@product"></partial>
+        }
+
+    </div>
+
+</div>
