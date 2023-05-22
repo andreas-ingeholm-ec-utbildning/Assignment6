@@ -1,6 +1,6 @@
 ﻿@{
     var showcases = ViewBag.Showcases as IEnumerable<Showcase> ?? Enumerable.Empty<Showcase>();
-    var products = ViewBag.Products as IEnumerable<Product> ?? Enumerable.Empty<Product>();
+    var products = ViewBag.Products as IEnumerable<ProductCollection> ?? Enumerable.Empty<ProductCollection>();
 }
 
 @foreach (var showcase in showcases)
