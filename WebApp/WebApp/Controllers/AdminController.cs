@@ -10,8 +10,7 @@ namespace WebApp.Controllers;
 public partial class AdminController : Controller
 {
 
-    //TODO: Fix contact form
-    //TODO: Add shopping cart
+    //TODO: Add new users in admin console
     //TODO: Fix carosouel for showcases
     //TODO: Double check against design template
 

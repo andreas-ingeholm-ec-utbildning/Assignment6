@@ -5,12 +5,19 @@ using WebApp.Contexts;
 namespace WebApp.Repositories;
 
 /// <summary>Provides database functionality for <typeparamref name="TEntity"/>.</summary>
-public class Repo<TEntity> where TEntity : class
+public class Repo<TEntity> : Repo<TEntity, DataContext> where TEntity : class
+{
+    public Repo(DataContext context) : base(context)
+    { }
+}
+
+/// <summary>Provides database functionality for <typeparamref name="TEntity"/>.</summary>
+public class Repo<TEntity, TContext> where TEntity : class where TContext : DbContext
 {
 
-    readonly DataContext context;
+    readonly TContext context;
 
-    public Repo(DataContext context) =>
+    public Repo(TContext context) =>
         this.context = context;
 
     /// <summary>Adds a <typeparamref name="TEntity"/> to the db.</summary>
