@@ -1,5 +1,8 @@
 ﻿@model Product;
 
+@if (!Model.IsVisible)
+    return;
+
 <a asp-controller="products" asp-action="product" asp-route-id="@Model.ID" class="collection-item">
     <img src="@Model.ImageUrl" alt="@Model.Name">
     <div class="body">

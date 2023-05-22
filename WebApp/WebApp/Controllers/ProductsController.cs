@@ -39,6 +39,7 @@ public class ProductsController : Controller
         return View(view);
     }
 
+    [Route("product/{id}")]
     public async Task<IActionResult> Product(Guid id)
     {
         var product = await productService.FindProduct(id);

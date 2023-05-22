@@ -10,6 +10,9 @@ public class ShowcaseFormView
 
     public Guid ID { get; set; }
 
+    [DisplayName("Is visible")]
+    public bool IsVisible { get; set; }
+
     [MinLength(3)]
     [DisplayName("Ingress *")]
     public string Ingress { get; set; } = null!;
@@ -27,7 +30,7 @@ public class ShowcaseFormView
     public string LinkUrl { get; set; } = null!;
 
     [DataType(DataType.Upload)]
-    [DisplayName("Image *")]
+    [DisplayName("Image")]
     public virtual IFormFile? Image { get; set; }
 
     public string? CurrentImageUrl { get; set; }
@@ -36,6 +39,7 @@ public class ShowcaseFormView
         new()
         {
             ID = view.ID,
+            IsVisible = view.IsVisible,
             Ingress = view.Ingress,
             Title = view.Title,
             LinkText = view.LinkText,
@@ -46,6 +50,7 @@ public class ShowcaseFormView
         new()
         {
             ID = showcase.ID,
+            IsVisible = showcase.IsVisible,
             Title = showcase.Title,
             LinkText = showcase.LinkText,
             LinkUrl = showcase.LinkUrl,

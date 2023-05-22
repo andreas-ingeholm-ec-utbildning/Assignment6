@@ -67,11 +67,14 @@ public class ShowcaseService
         if (showcase is null)
             return false;
 
+        showcase.IsVisible = view.IsVisible;
         showcase.Ingress = view.Ingress;
         showcase.Title = view.Title;
         showcase.LinkUrl = view.LinkUrl;
         showcase.LinkText = view.LinkText;
-        showcase.ImageUrl = await imageService.UploadImage<Showcase>(view.Image, showcase.ID);
+
+        if (view.Image is not null)
+            showcase.ImageUrl = await imageService.UploadImage<Showcase>(view.Image, showcase.ID);
 
         await repo.UpdateAsync(showcase);
         view.CurrentImageUrl = showcase.ImageUrl;

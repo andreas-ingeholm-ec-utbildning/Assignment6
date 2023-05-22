@@ -1,9 +1,14 @@
-﻿@foreach (Showcase showcase in ViewBag.Showcases)
-{
-    <partial name="/Views/Partials/_Showcase.cshtml" model="showcase"/>
+﻿@{
+    var showcases = ViewBag.Showcases as IEnumerable<Showcase> ?? Enumerable.Empty<Showcase>();
+    var products = ViewBag.Products as IEnumerable<Product> ?? Enumerable.Empty<Product>();
 }
 
-@foreach (ProductCollection collection in ViewBag.Products)
+@foreach (var showcase in showcases)
+{
+    <partial name="/Views/Partials/_Showcase.cshtml" model=showcase />
+}
+
+@foreach (var collection in products)
 {
     <partial name="/Views/Partials/_ProductCollection.cshtml" model="collection" />
 }

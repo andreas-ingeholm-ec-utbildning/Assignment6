@@ -13,7 +13,7 @@
 
             @if (User.HasClaim(ClaimTypes.Role, UserRole.Admin))
             {
-                <a class="link" asp-controller="admin">ADMIN CONSOLE</a>
+                <a class="link" asp-controller="admin" asp-action="index">ADMIN CONSOLE</a>
             }
 
         </nav>

@@ -10,6 +10,9 @@ public class ProductFormView
 
     public Guid ID { get; set; }
 
+    [DisplayName("Is visible")]
+    public bool IsVisible { get; set; }
+
     [Required(ErrorMessage = "You must assign a name to the product.")]
     [DisplayName("Product name *")]
     public string Name { get; set; } = null!;
@@ -22,7 +25,7 @@ public class ProductFormView
     public decimal Price { get; set; }
 
     [DataType(DataType.Upload)]
-    [DisplayName("Image *")]
+    [DisplayName("Image")]
     public virtual IFormFile? Image { get; set; }
 
     public string? CurrentImageUrl { get; set; }
@@ -33,6 +36,7 @@ public class ProductFormView
         new()
         {
             ID = view.ID,
+            IsVisible = view.IsVisible,
             Name = view.Name,
             Description = view.Description,
             Price = view.Price,
@@ -43,6 +47,7 @@ public class ProductFormView
         new()
         {
             ID = product.ID,
+            IsVisible = product.IsVisible,
             Name = product.Name,
             Description = product.Description,
             Price = product.Price,

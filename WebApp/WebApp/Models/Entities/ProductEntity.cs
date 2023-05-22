@@ -8,6 +8,8 @@ public class ProductEntity
 
     [Key]
     public Guid ID { get; set; } = Guid.NewGuid();
+    public bool IsVisible { get; set; }
+
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
     public string? ImageUrl { get; set; }
@@ -24,6 +26,7 @@ public class ProductEntity
         new()
         {
             ID = entity.ID,
+            IsVisible = entity.IsVisible,
             Name = entity.Name,
             Description = entity.Description,
             Price = entity.Price,

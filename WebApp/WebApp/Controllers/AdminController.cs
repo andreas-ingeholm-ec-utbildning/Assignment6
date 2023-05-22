@@ -10,10 +10,6 @@ namespace WebApp.Controllers;
 public partial class AdminController : Controller
 {
 
-    //TODO: Add new users in admin console
-    //TODO: Fix carosouel for showcases
-    //TODO: Double check against design template
-
     readonly AuthService authService;
     readonly UserService userService;
     readonly ProductService productService;

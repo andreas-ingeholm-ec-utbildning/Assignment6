@@ -4,6 +4,8 @@ public class ShowcaseEntity
 {
 
     public Guid ID { get; set; }
+    public bool IsVisible { get; set; }
+
     public string Ingress { get; set; } = null!;
     public string Title { get; set; } = null!;
     public string? ImageUrl { get; set; } = null!;
@@ -14,6 +16,7 @@ public class ShowcaseEntity
         new()
         {
             ID = entity.ID,
+            IsVisible = entity.IsVisible,
             Ingress = entity.Ingress,
             Title = entity.Title,
             ImageUrl = entity.ImageUrl,

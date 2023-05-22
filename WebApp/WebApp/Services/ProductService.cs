@@ -72,11 +72,14 @@ public class ProductService
         if (product is null)
             return false;
 
+        product.IsVisible = view.IsVisible;
         product.Name = view.Name;
         product.Description = view.Description;
         product.Price = view.Price;
         product.CategoryID = view.Category;
-        product.ImageUrl = await imageService.UploadImage<Product>(view.Image, product.ID);
+
+        if (view.Image is not null)
+            product.ImageUrl = await imageService.UploadImage<Product>(view.Image, product.ID);
 
         await productRepo.UpdateAsync(product);
         view.CurrentImageUrl = product.ImageUrl;
