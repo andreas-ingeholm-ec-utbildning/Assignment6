@@ -29,6 +29,7 @@ public class UserService
     }
 
     #endregion
+    #region Get
 
     /// <summary>Gets the user with the specified <paramref name="userID"/>, if one exists.</summary>
     public async Task<UserProfileEntity?> GetAsync(Guid userID) =>
@@ -45,6 +46,35 @@ public class UserService
     /// <summary>Enumerates all users.</summary>
     public async Task<IEnumerable<UserProfileEntity>> EnumerateAsync() =>
         await identityContext.UserProfiles.Include(u => u.User).ToArrayAsync();
+
+    /// <summary>Gets the email of the logged in user.</summary>
+    bool GetLoggedInEmail([NotNullWhen(true)] out string? email)
+    {
+
+        email = null;
+        var isAuthenticated = httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
+        if (!isAuthenticated)
+            return false;
+
+        email = httpContextAccessor.HttpContext?.User?.Identity?.Name;
+        return !string.IsNullOrEmpty(email);
+
+    }
+
+    /// <summary>Gets the profile of the logged in user.</summary>
+    bool GetLoggedInUser([NotNullWhen(true)] out UserProfileEntity? userProfile)
+    {
+
+        userProfile = null;
+        if (GetLoggedInEmail(out var email))
+            userProfile = Get(email);
+
+        return userProfile is not null;
+
+    }
+
+    #endregion
+    #region Update
 
     /// <summary>Updates a user.</summary>
     public async Task<bool> UpdateAsync(UserEditView view)
@@ -67,7 +97,7 @@ public class UserService
     }
 
     /// <summary>Updates a user.</summary>
-    public async Task<bool> UpdateAsync(UserEditAdminView view)
+    public async Task<bool> UpdateAsync(UserFormAdminView view)
     {
 
         var userProfile = await GetAsync(view.ID);
@@ -132,30 +162,24 @@ public class UserService
         await signInManager.RefreshSignInAsync(user);
     }
 
-    /// <summary>Gets the email of the logged in user.</summary>
-    bool GetLoggedInEmail([NotNullWhen(true)] out string? email)
+    #endregion
+    #region Delete
+
+    public async Task<bool> Delete(Guid id)
     {
 
-        email = null;
-        var isAuthenticated = httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
-        if (!isAuthenticated)
+        if (GetLoggedInUser(out var loggedInUser) && loggedInUser.UserID == id)
             return false;
 
-        email = httpContextAccessor.HttpContext?.User?.Identity?.Name;
-        return !string.IsNullOrEmpty(email);
+        var user = await userManager.FindByIdAsync(id.ToString());
+        if (user is null)
+            return false;
+
+        await userManager.DeleteAsync(user);
+        return true;
 
     }
 
-    /// <summary>Gets the profile of the logged in user.</summary>
-    bool GetLoggedInUser([NotNullWhen(true)] out UserProfileEntity? userProfile)
-    {
-
-        userProfile = null;
-        if (GetLoggedInEmail(out var email))
-            userProfile = Get(email);
-
-        return userProfile is not null;
-
-    }
+    #endregion
 
 }

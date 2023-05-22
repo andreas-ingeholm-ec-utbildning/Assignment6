@@ -2,7 +2,7 @@
 
 namespace WebApp.ViewModels;
 
-public class UserEditAdminView : UserEditView
+public class UserFormAdminView : UserEditView
 {
 
     //Set from AdminController
@@ -14,7 +14,7 @@ public class UserEditAdminView : UserEditView
     public Guid ID { get; set; }
     public string? Role { get; set; }
 
-    public static implicit operator UserEditAdminView(UserProfileEntity user) =>
+    public static implicit operator UserFormAdminView(UserProfileEntity user) =>
         new()
         {
             ID = user.UserID,

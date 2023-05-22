@@ -8,6 +8,8 @@ namespace WebApp.Controllers;
 public class UserController : Controller
 {
 
+    #region Injections
+
     readonly AuthService authService;
     readonly UserService userService;
 
@@ -17,6 +19,8 @@ public class UserController : Controller
         this.userService = userService;
     }
 
+    #endregion
+    #region User page
     [Authorize]
     public async Task<IActionResult> Index()
     {
@@ -42,6 +46,7 @@ public class UserController : Controller
 
     }
 
+    #endregion
     #region Login
 
     [HttpGet]
@@ -91,7 +96,7 @@ public class UserController : Controller
                 ModelState.AddModelError("", "A user with the specified email address already exists.");
             else
             {
-                if (await authService.RegisterAsync(view))
+                if (await authService.RegisterAsync(view) is not null)
                     return RedirectToAction("login");
                 else
                     ModelState.AddModelError("", "Something went wrong when creating user.");

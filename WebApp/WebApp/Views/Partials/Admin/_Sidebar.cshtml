@@ -113,7 +113,11 @@
 
     </ul>
 
-    <h5 class="mt-4 ms-3">Users:</h5>
+    <div class="mt-4 ms-3 d-flex flex-row">
+        <h5 class="w-100">Users:</h5>
+        <a asp-action="adduser" class="fw-bold text-decoration-none align-self-center h-100 me-2"><h5>+</h5></a>
+    </div>
+
     <ul class="px-3">
 
         @if ((ViewBag.Users as IEnumerable<object>)?.Count() == 0)

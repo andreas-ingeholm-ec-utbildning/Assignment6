@@ -1,4 +1,4 @@
-﻿@model UserEditAdminView;
+﻿@model UserFormAdminView;
 
 <div class="col-6">
     
@@ -7,5 +7,10 @@
     <div class="text-info my-2">ID: @Model.ID</div>
 
     <partial name="/Views/Partials/Forms/_UserAdmin.cshtml" model="@Model" />
+
+    @if(User.Identity?.Name != Model.Email)
+    {
+        <a asp-controller="admin" asp-action="deleteuser" asp-route-id="@Model.ID">Delete user...</a>
+    }
 
 </div>

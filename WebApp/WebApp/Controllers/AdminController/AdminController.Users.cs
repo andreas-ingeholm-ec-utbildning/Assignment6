@@ -6,6 +6,34 @@ namespace WebApp.Controllers;
 public partial class AdminController
 {
 
+    #region Add
+
+    [HttpGet("/admin/user/add")]
+    public IActionResult AddUser() =>
+        View();
+
+    [HttpPost("/admin/user/add")]
+    public async Task<IActionResult> AddUser(UserRegisterView view)
+    {
+
+        if (!ModelState.IsValid && !await authService.ExistsAsync(view.Email))
+        {
+            ModelState.AddModelError("", "Something went wrong when adding user.");
+            return View(view);
+        }
+
+        var user = await authService.RegisterAsync(view);
+        if (user is null)
+        {
+            ModelState.AddModelError("", "Something went wrong when adding user.");
+            return View(view);
+        }
+
+        return RedirectToAction("user", new { id = user.Id });
+
+    }
+
+    #endregion
     #region Edit
 
     [HttpGet("admin/user")]
@@ -16,7 +44,7 @@ public partial class AdminController
         if (user is null)
             return StatusCode(404);
 
-        var view = (UserEditAdminView)user;
+        var view = (UserFormAdminView)user;
         view.Role = await authService.GetRoleAsync(user.User);
 
         if (base.User.Identity?.Name is string email)
@@ -27,7 +55,7 @@ public partial class AdminController
     }
 
     [HttpPost("admin/user")]
-    public new async Task<IActionResult> User(UserEditAdminView view)
+    public new async Task<IActionResult> User(UserFormAdminView view)
     {
 
         if (!ModelState.IsValid || !await userService.UpdateAsync(view))
@@ -35,6 +63,23 @@ public partial class AdminController
 
         //Make sure page reloads for user, otherwise claims won't be refreshed
         return Redirect(view.ID.ToString());
+
+    }
+
+    #endregion
+    #region Delete
+
+    [HttpGet("admin/user/delete")]
+    public async Task<IActionResult> DeleteUser(Guid id)
+    {
+
+        if (await userService.Delete(id))
+            return RedirectToAction("index");
+        else
+        {
+            ModelState.AddModelError("", "An error occured when deleting user.");
+            return View();
+        }
 
     }
 

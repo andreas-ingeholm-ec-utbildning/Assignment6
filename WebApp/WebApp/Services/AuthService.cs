@@ -34,7 +34,7 @@ public class AuthService
         await userManager.FindByEmailAsync(emailAddress);
 
     /// <summary>Registers a user.</summary>
-    public async Task<bool> RegisterAsync(UserRegisterView view)
+    public async Task<User?> RegisterAsync(UserRegisterView view)
     {
 
         try
@@ -60,12 +60,12 @@ public class AuthService
             _ = await identityContext.UserProfiles.AddAsync(profile);
             _ = await identityContext.SaveChangesAsync();
 
-            return true;
+            return user;
 
         }
         catch
         {
-            return false;
+            return null;
         }
     }
 
@@ -89,7 +89,7 @@ public class AuthService
 
     }
 
-    /// <summary>Gets if we have a user signed-in.</summary>
+    /// <summary>Gets if the user is signed-in.</summary>
     public bool IsSignedIn(ClaimsPrincipal user) =>
         signInManager.IsSignedIn(user);
 
