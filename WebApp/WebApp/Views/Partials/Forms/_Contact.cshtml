@@ -9,19 +9,19 @@
 
             <div class="mb-3">
                 <label asp-for="Name" class="form-label"></label>
-                <input asp-for="Name" class="form-control"/>
+                <input asp-for="Name" class="form-control" onkeyup="validateText(event)"/>
                 <small><span asp-validation-for="Name" class="text-danger"></span></small>
             </div>
 
             <div class="mb-3">
                 <label asp-for="EmailAddress" class="form-label"></label>
-                <input asp-for="EmailAddress" class="form-control" />
+                <input asp-for="EmailAddress" class="form-control" onkeyup="validateEmail(event)"/>
                 <small><span asp-validation-for="EmailAddress" class="text-danger"></span></small>
             </div>
 
             <div class="mb-3">
                 <label asp-for="PhoneNumber" class="form-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" autocomplete="off" />
+                <input asp-for="PhoneNumber" class="form-control" autocomplete="off" onkeyup="validatePhoneNumber(event)" />
                 <small><span asp-validation-for="PhoneNumber" class="text-danger"></span></small>
             </div>
 
@@ -33,7 +33,7 @@
 
             <div class="mb-3">
                 <label asp-for="Message" class="form-label"></label>
-                <textarea asp-for="Message" class="form-control" autocomplete="off" ></textarea>
+                <textarea asp-for="Message" class="form-control" autocomplete="off" onkeyup="validateText(event)"></textarea>
                 <small><span asp-validation-for="Message" class="text-danger"></span></small>
             </div>
 
